@@ -1,0 +1,4 @@
+package com.kyawzinlinn.moviesapp.utils
+
+const val BASE_URL = "https://api.themoviedb.org/3/"
+const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNzhmZjBiMTExNWY1NzJhMDFjNDJlZWZkNTIzNGU2NyIsInN1YiI6IjYwMzRhMjg5MTEzMGJkMDAzZTQ0NWU5YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZT1mdPXbGsIWhcJsZLUqyg_ksC5povwtbMVwWIVNfKY"
