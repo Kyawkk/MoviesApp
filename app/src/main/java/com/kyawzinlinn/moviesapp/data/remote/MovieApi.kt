@@ -1,13 +1,37 @@
 package com.kyawzinlinn.moviesapp.data.remote
 
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.utils.TOKEN
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieApi {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
-        @Header("Authorization") token: String = "Bearer ".plus(TOKEN)
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Query("page")page: String
     ): NowPlayingMoviesDto
+
+    @GET("movie/popular")
+    suspend fun getPopularMovies(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Query("page")page: String
+    ): PopularMoviesDto
+
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Query("page")page: String
+    ): TopRatedMoviesDto
+
+    @GET("movie/upcoming")
+    suspend fun getUpComingMovies(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Query("page")page: String
+    ): UpComingMoviesDto
 }
