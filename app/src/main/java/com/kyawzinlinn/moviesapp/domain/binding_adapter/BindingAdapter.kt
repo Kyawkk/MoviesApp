@@ -15,7 +15,7 @@ const val TAG = "TAG"
 
 @BindingAdapter("movies")
 fun bindRecyclerView(recyclerView: RecyclerView, movies: List<Movie>?){
-    val adapter = HorizontalMovieItemAdapter()
+    val adapter = recyclerView.adapter as HorizontalMovieItemAdapter
     recyclerView.apply {
         setHasFixedSize(true)
         setAdapter(adapter)

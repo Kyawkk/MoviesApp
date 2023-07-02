@@ -62,8 +62,16 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
 
-    // coi image loading library
+    // coil image loading library
     implementation("io.coil-kt:coil:2.4.0")
+
+    // room database
+    val room_version = "2.5.2"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation ("androidx.room:room-ktx:$room_version")
+
 }
 kapt {
     correctErrorTypes = true

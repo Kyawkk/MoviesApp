@@ -1,5 +1,7 @@
 package com.kyawzinlinn.moviesapp.data.remote.dto
 
+import com.kyawzinlinn.moviesapp.data.local.database.DatabaseMovie
+
 data class Movie(
     val adult: Boolean,
     val backdrop_path: String,
@@ -16,3 +18,25 @@ data class Movie(
     val vote_average: Double,
     val vote_count: Int
 )
+
+fun List<Movie>.toDatabaseMovie(type: String): List<DatabaseMovie>{
+    return map{
+        DatabaseMovie(
+            it.id,
+            it.adult,
+            it.backdrop_path,
+            //it.genre_ids,
+            it.original_language,
+            it.original_title,
+            it.overview,
+            it.popularity,
+            it.poster_path,
+            it.release_date,
+            it.title,
+            it.video,
+            it.vote_average,
+            it.vote_count,
+            type
+        )
+    }
+}

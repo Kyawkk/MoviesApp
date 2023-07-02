@@ -1,5 +1,6 @@
 package com.kyawzinlinn.moviesapp.data.remote
 
+import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
@@ -34,4 +35,10 @@ interface MovieApi {
         @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
         @Query("page")page: String
     ): UpComingMoviesDto
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Path("movie_id") movieId: String
+    ): MovieDetailsDto
 }

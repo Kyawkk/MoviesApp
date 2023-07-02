@@ -1,6 +1,8 @@
 package com.kyawzinlinn.moviesapp.data.remote.repository
 
+import com.kyawzinlinn.moviesapp.data.local.database.MovieDao
 import com.kyawzinlinn.moviesapp.data.remote.MovieApi
+import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
@@ -25,5 +27,9 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getUpComingMovies(page: String): UpComingMoviesDto {
         return api.getUpComingMovies(page = page)
+    }
+
+    override suspend fun getMovieDetails(movieId: String): MovieDetailsDto {
+        return api.getMovieDetails(movieId = movieId)
     }
 }
