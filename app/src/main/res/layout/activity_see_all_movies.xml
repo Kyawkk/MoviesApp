@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <data>
+        <import type="com.kyawzinlinn.moviesapp.utils.RecyclerviewType"/>
+        <variable
+            name="isLoading"
+            type="Boolean" />
+        <variable
+            name="movies"
+            type="java.util.List" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        tools:context=".SeeAllMoviesActivity"
+        android:background="@color/activity_light_background"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_see_all_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:clickable="true"
+            android:tint="?colorControlNormal"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_see_all_movies_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_see_all_movies_title"
+            app:srcCompat="@drawable/round_chevron_left_24" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/round_search_24"
+            android:tint="?colorControlNormal"
+            android:clickable="true"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_see_all_movies_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_see_all_movies_title" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            isShimmerLoading="@{isLoading}"
+            app:layout_constraintTop_toBottomOf="@+id/tv_see_all_movies_title"
+            android:layout_margin="16dp"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/vertical_shimmer_movie_item"/>
+                <include layout="@layout/vertical_shimmer_movie_item"/>
+                <include layout="@layout/vertical_shimmer_movie_item"/>
+                <include layout="@layout/vertical_shimmer_movie_item"/>
+                <include layout="@layout/vertical_shimmer_movie_item"/>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_see_all_movies"
+            movies="@{movies}"
+            recyclerViewType="@{RecyclerviewType.VERTICAL}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/pb_load_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_see_all_movies_title"
+            tools:listitem="@layout/vertical_movie_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/primary_color"
+            android:progressTint="@color/primary_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/pb_load_more"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/rv_see_all_movies"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_see_all_movies_title"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            android:textFontWeight="600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</layout>

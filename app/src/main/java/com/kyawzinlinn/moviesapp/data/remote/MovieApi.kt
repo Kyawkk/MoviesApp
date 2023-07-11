@@ -1,8 +1,10 @@
 package com.kyawzinlinn.moviesapp.data.remote
 
 import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.TagMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.utils.TOKEN
@@ -41,4 +43,20 @@ interface MovieApi {
         @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
         @Path("movie_id") movieId: String
     ): MovieDetailsDto
+
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Path("movie_id") movieId: String,
+        @Query("page") page: String,
+    ): SimilarMoviesDto
+
+    @GET("discover/movie")
+    suspend fun getMoviesByTagName(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Query("with_genres") genreId: String,
+        @Query("page") page: String,
+    ): TagMoviesDto
+
+
 }

@@ -1,5 +1,6 @@
 package com.kyawzinlinn.moviesapp.data.remote.dto
 
+import android.util.Log
 import com.kyawzinlinn.moviesapp.data.local.database.DatabaseMovie
 
 data class Movie(
@@ -15,17 +16,17 @@ data class Movie(
     val release_date: String,
     val title: String,
     val video: Boolean,
-    val vote_average: Double,
+    val vote_average: Float,
     val vote_count: Int
 )
 
 fun List<Movie>.toDatabaseMovie(type: String): List<DatabaseMovie>{
+    Log.d("TAG", "toDatabaseMovie: $type ${map { it.title }}")
     return map{
         DatabaseMovie(
             it.id,
             it.adult,
             it.backdrop_path,
-            //it.genre_ids,
             it.original_language,
             it.original_title,
             it.overview,

@@ -30,12 +30,11 @@ class MovieViewModel @Inject constructor(
     private val _movieDetailState = MutableLiveData<MovieState>()
     val movieDetailState = _movieDetailState
 
-    init {
-        getNowPlayingMovies("1")
-        getPopularMovies("1")
-        getTopRatedMovies("1")
-        getUpComingMovies("1")
-    }
+    private val _similarMoviesState = MutableLiveData<MovieState>()
+    val similarMoviesState = _similarMoviesState
+
+    private val _tagMoviesState = MutableLiveData<MovieState>()
+    val tagMoviesState = _tagMoviesState
 
     fun getNowPlayingMovies(page: String){
         movieUseCase.nowPlayingMovieUseCase(page).onEach {
@@ -102,6 +101,34 @@ class MovieViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _movieDetailState.value = MovieState(error = it.message.toString())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getSimilarMovies(movieId: String,page: String){
+        movieUseCase.similarMoviesUseCase(movieId,page).onEach {
+            when(it){
+                is Resource.Loading -> _similarMoviesState.value = MovieState(isLoading = true)
+                is Resource.Success -> {
+                    _similarMoviesState.value = MovieState(data = it.data)
+                }
+                is Resource.Error -> {
+                    _similarMoviesState.value = MovieState(error = it.message.toString())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getTagMovies(genreId: String, page: String){
+        movieUseCase.tagMoviesUseCase(genreId,page).onEach {
+            when(it){
+                is Resource.Loading -> _tagMoviesState.value = MovieState(isLoading = true)
+                is Resource.Success -> {
+                    _tagMoviesState.value = MovieState(data = it.data)
+                }
+                is Resource.Error -> {
+                    _tagMoviesState.value = MovieState(error = it.message.toString())
                 }
             }
         }.launchIn(viewModelScope)

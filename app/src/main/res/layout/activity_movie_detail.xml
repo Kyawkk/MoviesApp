@@ -4,29 +4,503 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="com.kyawzinlinn.moviesapp.utils.PosterSize"/>
+        <import type="android.view.View" />
+        <import type="com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto"/>
+        <import type="com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto"/>
+        <import type="com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto"/>
+        <import type="com.kyawzinlinn.moviesapp.utils.RecyclerviewType"/>
+        <import type="com.kyawzinlinn.moviesapp.utils.CastType"/>
+
         <variable
-            name="viewModel"
-            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.MovieViewModel" />
+            name="movieViewModel"
+            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.MovieViewModel"/> />
+
+        <variable
+            name="castViewModel"
+            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.CastViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="itemTransition"
+        android:scrollbarSize="0dp"
         tools:context=".MovieDetailActivity">
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@{viewModel.movieDetailState.data.toString()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:foreground="@drawable/poster_foreground"
+                imageUrl="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).backdrop_path}"
+                size="@{PosterSize.W500}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                android:layout_width="130dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:transitionName="@string/movie_img_shared_transition"
+                android:layout_marginTop="-40dp"
+                android:outlineSpotShadowColor="@android:color/transparent"
+                android:shadowColor="@android:color/transparent"
+                app:cardElevation="2dp"
+                app:layout_constraintBottom_toBottomOf="@+id/textView12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                app:strokeWidth="0dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    imageUrl="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).poster_path}"
+                    size="@{PosterSize.W300}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="2"
+                android:text="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).title}"
+                android:elevation="2dp"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textSize="22sp"
+                android:textFontWeight="600"
+                android:transitionName="@string/movie_title_shared_transition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{@string/votes(String.valueOf(((MovieDetailsDto)movieViewModel.movieDetailState.data).vote_count))}"
+                android:elevation="1dp"
+                android:layout_marginTop="2dp"
+                android:visibility="@{movieViewModel.movieDetailState.loading ? View.GONE : View.VISIBLE}"
+                android:textFontWeight="600"
+                app:layout_constraintEnd_toEndOf="@+id/textView5"
+                app:layout_constraintStart_toStartOf="@+id/textView5"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:layout_marginTop="8dp"
+                android:text="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).release_date}"
+                app:layout_constraintEnd_toEndOf="@+id/textView11"
+                app:layout_constraintStart_toStartOf="@+id/ratingBar"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+            <!-- Rating bar shimmer -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:elevation="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:background="@color/place_holder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/place_holder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/place_holder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/place_holder" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:max="10"
+                android:numStars="5"
+                android:elevation="1dp"
+                android:layout_marginTop="4dp"
+                android:progressTint="@color/primary_color"
+                android:rating="@{(((MovieDetailsDto)movieViewModel.movieDetailState.data).vote_average * 0.5f)}"
+                android:stepSize="0.5"
+                android:visibility="@{movieViewModel.movieDetailState.loading ? View.GONE : View.VISIBLE}"
+                android:transformPivotX="0dp"
+                android:transformPivotY="0dp"
+                app:layout_constraintStart_toStartOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+            <View
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="-20dp"
+                android:background="@drawable/content_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4">
+            </View>
+
+            <TextView
+                android:id="@+id/textView13"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Genres"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/genre_shimmer"
+                isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
+                app:layout_constraintEnd_toEndOf="@+id/textView12"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_genre_item" />
+                    <include layout="@layout/shimmer_genre_item" />
+                    <include layout="@layout/shimmer_genre_item" />
+                    <include layout="@layout/shimmer_genre_item" />
+                    <include layout="@layout/shimmer_genre_item" />
+                    <include layout="@layout/shimmer_genre_item" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:id="@+id/rv_genre"
+                tools:listitem="@layout/genre_item"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                genres="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).genres}"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Overview"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/genre_shimmer" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/overview_shimmer"
+                isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
+                android:layout_width="0dp"
+                android:layout_marginTop="8dp"
+                android:elevation="1dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@+id/textView12"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView14"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="@color/place_holder"/>
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:justificationMode="inter_word"
+                android:text="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).overview}"
+                android:minHeight="100dp"
+                app:layout_constraintEnd_toEndOf="@+id/rv_genre"
+                app:layout_constraintStart_toStartOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+            <TextView
+                android:id="@+id/textView16"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Casts"
+                android:textFontWeight="600"
+                android:textSize="18dp"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                isShimmerLoading="@{castViewModel.movieCastsState.loading}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/casts_shimmer"
+                android:layout_marginTop="8dp"
+                android:elevation="1dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/overview_shimmer"
+                app:layout_constraintTop_toBottomOf="@+id/textView16"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+
+                    <View
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/shimmer_cast_bg" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cast"
+                casts="@{((CastsDto)castViewModel.movieCastsState.data).cast}"
+                castType="@{CastType.AVATAR}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/overview_shimmer"
+                app:layout_constraintStart_toStartOf="@id/overview_shimmer"
+                app:layout_constraintTop_toBottomOf="@+id/textView16"
+                tools:listitem="@layout/movie_cast_item" >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textView17"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Similar Movies"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@id/casts_shimmer" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="1dp"
+                isShimmerLoading="@{movieViewModel.similarMoviesState.loading}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView17"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_similar_movies"
+                movies="@{((SimilarMoviesDto)movieViewModel.similarMoviesState.data).results}"
+                recyclerViewType="@{RecyclerviewType.HORIZONTAL}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="@id/overview_shimmer"
+                app:layout_constraintStart_toStartOf="@id/overview_shimmer"
+                app:layout_constraintTop_toBottomOf="@id/textView17"
+                tools:listitem="@layout/movie_item" />
+
+            <ImageView
+                android:id="@+id/iv_movie_detail_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:padding="8dp"
+                android:clickable="true"
+                android:background="@drawable/button_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/round_chevron_left_24" />
+
+            <ImageView
+                android:id="@+id/iv_movie_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:elevation="1dp"
+                android:padding="8dp"
+                android:background="@drawable/button_bg"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_movie_detail_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iv_movie_detail_back"
+                app:srcCompat="@drawable/baseline_favorite_border_24" />
+
+            <TextView
+                android:id="@+id/tv_see_all_similar_movies"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="See All"
+                android:textFontWeight="600"
+                android:textColor="@color/primary_color"
+                app:layout_constraintBottom_toBottomOf="@+id/textView17"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView17" />
+
+            <TextView
+                android:id="@+id/tv_see_all_casts"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="See All"
+                android:textColor="@color/primary_color"
+                android:textFontWeight="600"
+                app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView16" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>

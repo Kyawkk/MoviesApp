@@ -8,19 +8,25 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule {
+object MovieApiModule {
 
     @Provides
     @Singleton
-    fun provideApi(): MovieApi{
+    fun provideMovieApi(): MovieApi{
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(10,TimeUnit.SECONDS)
+            .build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(MovieApi::class.java)
@@ -31,4 +37,5 @@ object ApiModule {
     fun provideMovieRepository(api: MovieApi): MovieRepository{
         return MovieRepositoryImpl(api)
     }
+
 }

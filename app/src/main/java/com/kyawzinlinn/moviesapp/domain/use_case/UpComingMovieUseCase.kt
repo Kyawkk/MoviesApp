@@ -1,5 +1,6 @@
 package com.kyawzinlinn.moviesapp.domain.use_case
 
+import android.util.Log
 import com.kyawzinlinn.moviesapp.data.local.database.MovieDao
 import com.kyawzinlinn.moviesapp.data.local.database.toMovieDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
@@ -9,6 +10,7 @@ import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.util.logging.Handler
 import javax.inject.Inject
 
 class UpComingMovieUseCase @Inject constructor(
@@ -29,12 +31,17 @@ class UpComingMovieUseCase @Inject constructor(
             movieDao.deleteMovies(type.toString())
             movieDao.insertAll(moviesFromApi.results.toDatabaseMovie(type.toString()))
 
+            android.os.Handler().postDelayed(Runnable {
+
+            },0)
+
             emit(Resource.Success(moviesFromApi))
         }catch (e: Exception){
             emit(Resource.Error(e.message.toString()))
         }
 
         val newMovies = movieDao.getMovies(type.toString()).toMovieDto(type) as UpComingMoviesDto
+
         emit(Resource.Success(newMovies))
     }
 }

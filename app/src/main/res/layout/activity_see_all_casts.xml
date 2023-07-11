@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.kyawzinlinn.moviesapp.utils.CastType"/>
+        <import type="com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto"/>
+        <variable
+            name="castViewModel"
+            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.CastViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        tools:context=".SeeAllCastsActivity"
+        android:background="@color/activity_light_background"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/iv_see_all_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:clickable="true"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_see_all_casts_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_see_all_casts_title"
+            app:srcCompat="@drawable/round_chevron_left_24"
+            app:tint="?colorControlNormal" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/round_search_24"
+            android:tint="?colorControlNormal"
+            android:clickable="true"
+            android:background="?selectableItemBackgroundBorderless"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_see_all_casts_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_see_all_casts_title" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:elevation="1dp"
+            android:layout_marginTop="16dp"
+            isShimmerLoading="@{castViewModel.movieCastsState.loading}"
+            app:layout_constraintTop_toBottomOf="@+id/tv_see_all_casts_title"
+            android:layout_margin="16dp"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                    <include
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        layout="@layout/shimmer_vertical_cast_item"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginRight="8dp"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_see_all_casts"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            casts="@{((CastsDto)castViewModel.movieCastsState.data).cast}"
+            castType="@{CastType.DETAIL}"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintBottom_toTopOf="@id/pb_load_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_see_all_casts_title"
+            tools:listitem="@layout/cast_vertical_item">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/primary_color"
+            android:progressTint="@color/primary_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/pb_load_more"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/rv_see_all_casts"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_see_all_casts_title"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:text="Casts And Crews"
+            android:textSize="18sp"
+            android:textFontWeight="600"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

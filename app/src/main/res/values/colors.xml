@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="primary_color">#03A9F4</color>
+    <color name="place_holder">#dddddd</color>
+    <color name="activity_light_background">#eeeeee</color>
 </resources>

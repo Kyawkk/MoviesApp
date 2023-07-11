@@ -3,7 +3,20 @@
     <style name="Base.Theme.MoviesApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="Theme.MoviesApp" parent="Base.Theme.MoviesApp" />
+
+    <style name="MyRatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1.0</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">44dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
 </resources>

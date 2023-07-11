@@ -8,6 +8,7 @@
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto"/>
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto"/>
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto"/>
+        <import type="com.kyawzinlinn.moviesapp.utils.RecyclerviewType"/>
 
         <variable
             name="viewmodel"
@@ -18,6 +19,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:scrollbarSize="0dp"
+        android:background="@color/activity_light_background"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,13 +39,59 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tv_see_all_now_playing"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:padding="4dp"
+                android:background="?selectableItemBackground"
+                android:text="See All"
+                android:textColor="@color/primary_color"
+                app:layout_constraintBottom_toBottomOf="@+id/textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_now_playing"
+                isShimmerLoading="@{viewmodel.nowPlayingMovieState.loading}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_now_playing"
                 movies="@{((NowPlayingMoviesDto)viewmodel.nowPlayingMovieState.data).results}"
+                recyclerViewType="@{RecyclerviewType.HORIZONTAL}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -62,17 +110,63 @@
                 android:layout_marginTop="16dp"
                 android:text="Popular"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/rv_now_playing"
-                app:layout_constraintTop_toBottomOf="@+id/rv_now_playing" />
+                app:layout_constraintStart_toStartOf="@+id/shimmer_now_playing"
+                app:layout_constraintTop_toBottomOf="@+id/shimmer_now_playing" />
+
+            <TextView
+                android:id="@+id/tv_see_all_popular"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:padding="4dp"
+                android:text="See All"
+                android:textColor="@color/primary_color"
+                app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_popular"
+                isShimmerLoading="@{viewmodel.popularMovieState.loading}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_popular"
                 movies="@{((PopularMoviesDto)viewmodel.popularMovieState.data).results}"
+                recyclerViewType="@{RecyclerviewType.HORIZONTAL}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -91,15 +185,61 @@
                 android:text="Top Rated"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/rv_now_playing"
-                app:layout_constraintTop_toBottomOf="@+id/rv_popular" />
+                app:layout_constraintTop_toBottomOf="@+id/shimmer_popular" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_top_rated"
+                isShimmerLoading="@{viewmodel.topRatedMovieState.loading}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tv_see_all_top_rated"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:padding="4dp"
+                android:text="See All"
+                android:textColor="@color/primary_color"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView4" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_top_rated"
                 movies="@{((TopRatedMoviesDto)viewmodel.topRatedMovieState.data).results}"
+                recyclerViewType="@{RecyclerviewType.HORIZONTAL}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -118,19 +258,67 @@
                 android:layout_marginTop="16dp"
                 android:text="Upcoming"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/rv_now_playing"
-                app:layout_constraintTop_toBottomOf="@+id/rv_top_rated" />
+                app:layout_constraintStart_toStartOf="@+id/shimmer_top_rated"
+                app:layout_constraintTop_toBottomOf="@+id/shimmer_top_rated" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_upcoming"
+                isShimmerLoading="@{viewmodel.upComingMovieState.loading}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:shimmer_duration="800">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+
+                    <include layout="@layout/horizontal_shimmer_movie_item" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <TextView
+                android:id="@+id/tv_see_all_upcoming"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:padding="4dp"
+                android:text="See All"
+                android:textColor="@color/primary_color"
+                app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView2" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_upcoming"
                 movies="@{((UpComingMoviesDto)viewmodel.upComingMovieState.data).results}"
+                recyclerViewType="@{RecyclerviewType.HORIZONTAL}"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
-                android:layout_marginTop="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"

@@ -25,7 +25,9 @@ object DatabaseModule {
             application,
             MovieDatabase::class.java,
             "movie_database"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
@@ -33,11 +35,4 @@ object DatabaseModule {
     fun provideMovieDao(database: MovieDatabase): MovieDao {
         return database.movieDao()
     }
-
-    /*@Provides
-    @Singleton
-    fun provideMovieDatabaseRepository(dao: MovieDao): MovieDatabaseRepository{
-        return MovieDatabaseRepository(dao)
-    }*/
-
 }
