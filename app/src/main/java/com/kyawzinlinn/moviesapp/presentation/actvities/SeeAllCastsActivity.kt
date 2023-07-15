@@ -1,14 +1,12 @@
-package com.kyawzinlinn.moviesapp
+package com.kyawzinlinn.moviesapp.presentation.actvities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
-import com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto
 import com.kyawzinlinn.moviesapp.databinding.ActivitySeeAllCastsBinding
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastItemAdapter
-import com.kyawzinlinn.moviesapp.presentation.now_playing_movie.CastViewModel
+import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +44,7 @@ class SeeAllCastsActivity : AppCompatActivity() {
 
     private fun setUpRecyclerView() {
         binding.rvSeeAllCasts.adapter = MovieCastItemAdapter{
-            val intent = Intent(this,CastDetailActivity::class.java)
+            val intent = Intent(this, CastDetailActivity::class.java)
             intent.putExtra(CAST_ID_INTENT_EXTRA,it.id.toString())
             startActivity(intent)
         }

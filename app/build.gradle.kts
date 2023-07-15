@@ -65,6 +65,12 @@ dependencies {
     // coil image loading library
     implementation("io.coil-kt:coil:2.4.0")
 
+    val lifecycle_version = "2.6.1"
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+
     // room database
     val room_version = "2.5.2"
 

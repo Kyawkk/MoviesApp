@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.use_case
+package com.kyawzinlinn.moviesapp.domain.use_case.movie
 
 import javax.inject.Inject
 
@@ -9,5 +9,6 @@ data class MovieUseCase @Inject constructor(
     val upComingMovieUseCase: UpComingMovieUseCase,
     val movieDetailsUseCase: MovieDetailsUseCase,
     val similarMoviesUseCase: SimilarMoviesUseCase,
-    val tagMoviesUseCase: TagMoviesUseCase
+    val tagMoviesUseCase: TagMoviesUseCase,
+    val searchMoviesUseCase: SearchMoviesUseCase
 )

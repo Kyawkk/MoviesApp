@@ -14,11 +14,11 @@
 
         <variable
             name="movieViewModel"
-            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.MovieViewModel"/> />
+            type="com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel"/> />
 
         <variable
             name="castViewModel"
-            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.CastViewModel" />
+            type="com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel" />
     </data>
 
     <ScrollView
@@ -26,7 +26,9 @@
         android:layout_height="match_parent"
         android:transitionName="itemTransition"
         android:scrollbarSize="0dp"
-        tools:context=".MovieDetailActivity">
+        android:animateLayoutChanges="true"
+        android:id="@+id/root"
+        tools:context=".presentation.actvities.MovieDetailActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -197,12 +199,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/genre_shimmer"
+                isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:id="@+id/genre_shimmer"
-                isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
-                app:layout_constraintEnd_toEndOf="@+id/textView12"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/textView13"
                 app:shimmer_duration="800">
@@ -213,10 +216,15 @@
                     android:orientation="horizontal">
 
                     <include layout="@layout/shimmer_genre_item" />
+
                     <include layout="@layout/shimmer_genre_item" />
+
                     <include layout="@layout/shimmer_genre_item" />
+
                     <include layout="@layout/shimmer_genre_item" />
+
                     <include layout="@layout/shimmer_genre_item" />
+
                     <include layout="@layout/shimmer_genre_item" />
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -254,10 +262,11 @@
                 android:id="@+id/overview_shimmer"
                 isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
                 android:layout_width="0dp"
-                android:layout_marginTop="8dp"
-                android:elevation="1dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="@+id/textView12"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:elevation="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/textView14"
                 app:shimmer_duration="800">
@@ -269,7 +278,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
-                        android:background="@color/place_holder"/>
+                        android:background="@color/place_holder" />
 
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
@@ -441,8 +450,10 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/overview_shimmer"
                 app:layout_constraintStart_toStartOf="@id/overview_shimmer"
                 app:layout_constraintTop_toBottomOf="@id/textView17"

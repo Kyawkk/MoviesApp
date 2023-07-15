@@ -1,7 +1,6 @@
-package com.kyawzinlinn.moviesapp.domain.use_case
+package com.kyawzinlinn.moviesapp.domain.use_case.movie
 
 import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
-import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.Resource
 import kotlinx.coroutines.flow.Flow

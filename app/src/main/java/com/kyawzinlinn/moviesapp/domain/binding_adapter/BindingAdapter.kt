@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.kyawzinlinn.moviesapp.data.local.database.MovieSearchHistory
 import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
@@ -22,6 +22,7 @@ import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.ImageSliderAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastItemAdapter
+import com.kyawzinlinn.moviesapp.domain.adapter.SearchHistoryAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.VerticalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.utils.CastType
 import com.kyawzinlinn.moviesapp.utils.IMG_URL_PREFIX_300
@@ -39,8 +40,10 @@ fun bindRecyclerView(recyclerView: RecyclerView, movies: List<Any>?, type: Recyc
             (recyclerView.adapter as HorizontalMovieItemAdapter).submitList(movies?.map { it as Movie })
         }
         RecyclerviewType.VERTICAL -> {
-            val adapter = recyclerView.adapter as VerticalMovieItemAdapter
-            recyclerView.adapter = adapter
+            if (!movies.isNullOrEmpty()){
+                val adapter = recyclerView.adapter as VerticalMovieItemAdapter
+                recyclerView.adapter = adapter
+            }
         }
     }
 }
@@ -71,7 +74,10 @@ fun splitDate(textView: TextView, string: String){
 
 @BindingAdapter("isShimmerLoading")
 fun showShimmer(shimmerFrameLayout: ShimmerFrameLayout, isLoading: Boolean){
-    if(isLoading) shimmerFrameLayout.startShimmer()
+    if(isLoading) {
+        shimmerFrameLayout.startShimmer()
+        shimmerFrameLayout.visibility = View.VISIBLE
+    }
     else {
         shimmerFrameLayout.stopShimmer()
         shimmerFrameLayout.visibility = View.INVISIBLE
@@ -86,6 +92,16 @@ fun bindGenreRecyclerview(recyclerView: RecyclerView, genres: List<Genre>?){
         setAdapter(adapter)
     }
     adapter.submitList(genres)
+}
+
+@BindingAdapter("searchHistories")
+fun bindHistoryRecyclerview(recyclerView: RecyclerView, searchHistories: List<MovieSearchHistory>?){
+    val adapter = recyclerView.adapter as SearchHistoryAdapter
+    recyclerView.apply {
+        setHasFixedSize(true)
+        setAdapter(adapter)
+    }
+    adapter.submitList(searchHistories)
 }
 
 @BindingAdapter("sliderImages")

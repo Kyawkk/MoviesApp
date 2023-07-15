@@ -4,6 +4,7 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TagMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
@@ -57,6 +58,13 @@ interface MovieApi {
         @Query("with_genres") genreId: String,
         @Query("page") page: String,
     ): TagMoviesDto
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Query("query") query: String,
+        @Query("page") page: String,
+    ): SearchMoviesDto
 
 
 }

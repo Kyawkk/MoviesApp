@@ -1,11 +1,9 @@
 package com.kyawzinlinn.moviesapp.data.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
-import com.kyawzinlinn.moviesapp.App
-import com.kyawzinlinn.moviesapp.data.local.database.DatabaseMovie
-import com.kyawzinlinn.moviesapp.data.local.database.MovieDao
+import com.kyawzinlinn.moviesapp.data.local.dao.MovieDao
+import com.kyawzinlinn.moviesapp.data.local.dao.SearchDao
 import com.kyawzinlinn.moviesapp.data.local.database.MovieDatabase
 import dagger.Module
 import dagger.Provides
@@ -34,5 +32,11 @@ object DatabaseModule {
     @Singleton
     fun provideMovieDao(database: MovieDatabase): MovieDao {
         return database.movieDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSearchDao(database: MovieDatabase): SearchDao {
+        return database.searchDao()
     }
 }

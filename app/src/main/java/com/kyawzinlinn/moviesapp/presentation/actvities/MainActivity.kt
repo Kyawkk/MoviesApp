@@ -1,20 +1,18 @@
-package com.kyawzinlinn.moviesapp
+package com.kyawzinlinn.moviesapp.presentation.actvities
 
+import android.animation.LayoutTransition
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
-import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
-import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.databinding.ActivityMainBinding
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
-import com.kyawzinlinn.moviesapp.presentation.now_playing_movie.MovieViewModel
+import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
@@ -39,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
 
+        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+
         viewModel.apply {
             getNowPlayingMovies("1")
             getPopularMovies("1")
@@ -62,18 +62,25 @@ class MainActivity : AppCompatActivity() {
             tvSeeAllPopular.setOnClickListener { goToSeeAllMoviesActivity(MovieType.POPULAR) }
             tvSeeAllTopRated.setOnClickListener { goToSeeAllMoviesActivity(MovieType.TOP_RATED) }
             tvSeeAllUpcoming.setOnClickListener { goToSeeAllMoviesActivity(MovieType.UPCOMING) }
+
+            ivSearch.setOnClickListener { goToSearchMoviesActivity() }
         }
     }
 
+    private fun goToSearchMoviesActivity() {
+        val intent = Intent(this, SearchMoviesActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun goToSeeAllMoviesActivity(movieType: MovieType) {
-        val intent = Intent(this,SeeAllMoviesActivity::class.java)
+        val intent = Intent(this, SeeAllMoviesActivity::class.java)
         intent.putExtra(MOVIE_TYPE_INTENT_EXTRA,movieType)
         startActivity(intent)
     }
 
     private fun getHorizontalMovieAdapter(): HorizontalMovieItemAdapter{
         return HorizontalMovieItemAdapter{ id, itemBinding ->
-            val intent = Intent(this,MovieDetailActivity::class.java)
+            val intent = Intent(this, MovieDetailActivity::class.java)
             val pair1 = Pair.create(itemBinding.ivMoviePoster as View,itemBinding.ivMoviePoster.transitionName)
             val pair2 = Pair.create(itemBinding.textView7 as View,itemBinding.textView7.transitionName)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,pair1,pair2)

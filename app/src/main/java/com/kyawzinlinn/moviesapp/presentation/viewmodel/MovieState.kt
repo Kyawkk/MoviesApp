@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.presentation.now_playing_movie
+package com.kyawzinlinn.moviesapp.presentation.viewmodel
 
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 

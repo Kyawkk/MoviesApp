@@ -1,6 +1,6 @@
-package com.kyawzinlinn.moviesapp.domain.use_case
+package com.kyawzinlinn.moviesapp.domain.use_case.movie
 
-import com.kyawzinlinn.moviesapp.data.local.database.MovieDao
+import com.kyawzinlinn.moviesapp.data.local.dao.MovieDao
 import com.kyawzinlinn.moviesapp.data.local.database.toMovieDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.toDatabaseMovie

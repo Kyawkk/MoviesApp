@@ -16,19 +16,22 @@
         android:theme="@style/Theme.MoviesApp"
         tools:targetApi="31">
         <activity
-            android:name=".CastDetailActivity"
+            android:name=".presentation.actvities.SearchMoviesActivity"
             android:exported="false" />
         <activity
-            android:name=".SeeAllCastsActivity"
+            android:name=".presentation.actvities.CastDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".SeeAllMoviesActivity"
+            android:name=".presentation.actvities.SeeAllCastsActivity"
             android:exported="false" />
         <activity
-            android:name=".MovieDetailActivity"
+            android:name=".presentation.actvities.SeeAllMoviesActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.actvities.MovieDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.actvities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

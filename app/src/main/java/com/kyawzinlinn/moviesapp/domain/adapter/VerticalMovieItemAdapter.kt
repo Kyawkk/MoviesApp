@@ -17,10 +17,12 @@ class VerticalMovieItemAdapter(private val movies: MutableList<Movie>, private v
 
     fun addMovies(newMovies: List<Movie>){
 
-        newMovies.forEachIndexed {index, movie ->
-            movies.add(movie)
-            notifyItemInserted(movies.size + index + 1)
-        }
+        try {
+            newMovies.forEachIndexed {index, movie ->
+                movies.add(movie)
+                notifyItemInserted(movies.size + index + 1)
+            }
+        }catch (e: Exception){}
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

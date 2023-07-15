@@ -1,8 +1,8 @@
-package com.kyawzinlinn.moviesapp.domain.use_case
+package com.kyawzinlinn.moviesapp.domain.use_case.movie
 
-import com.kyawzinlinn.moviesapp.data.local.database.MovieDao
+import com.kyawzinlinn.moviesapp.data.local.dao.MovieDao
 import com.kyawzinlinn.moviesapp.data.local.database.toMovieDto
-import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.toDatabaseMovie
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.MovieType
@@ -11,30 +11,35 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class TopRateMovieUseCase @Inject constructor(
+class UpComingMovieUseCase @Inject constructor(
     val repository: MovieRepository,
     val movieDao: MovieDao
 ) {
-    operator fun invoke(page: String): Flow<Resource<TopRatedMoviesDto>> = flow {
+    operator fun invoke(page: String): Flow<Resource<UpComingMoviesDto>> = flow {
         emit(Resource.Loading())
 
-        val type = MovieType.TOP_RATED
+        val type = MovieType.UPCOMING
 
-        val moviesFromDb = movieDao.getMovies(type.toString()).toMovieDto(type) as TopRatedMoviesDto
+        val moviesFromDb = movieDao.getMovies(type.toString()).toMovieDto(type) as UpComingMoviesDto
         emit(Resource.Loading(data = moviesFromDb))
         try {
 
-            val moviesFromApi = repository.getTopRatedMovies(page)
+            val moviesFromApi = repository.getUpComingMovies(page)
 
             movieDao.deleteMovies(type.toString())
             movieDao.insertAll(moviesFromApi.results.toDatabaseMovie(type.toString()))
+
+            android.os.Handler().postDelayed(Runnable {
+
+            },0)
 
             emit(Resource.Success(moviesFromApi))
         }catch (e: Exception){
             emit(Resource.Error(e.message.toString()))
         }
 
-        val newMovies = movieDao.getMovies(type.toString()).toMovieDto(type) as TopRatedMoviesDto
+        val newMovies = movieDao.getMovies(type.toString()).toMovieDto(type) as UpComingMoviesDto
+
         emit(Resource.Success(newMovies))
     }
 }

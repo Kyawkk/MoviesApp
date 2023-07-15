@@ -8,12 +8,12 @@
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto"/>
         <variable
             name="castViewModel"
-            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.CastViewModel" />
+            type="com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        tools:context=".SeeAllCastsActivity"
+        tools:context=".presentation.actvities.SeeAllCastsActivity"
         android:background="@color/activity_light_background"
         android:layout_height="match_parent">
         <ImageView

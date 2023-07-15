@@ -12,20 +12,34 @@
 
         <variable
             name="viewmodel"
-            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.MovieViewModel" />
+            type="com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel" />
 
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:scrollbarSize="0dp"
+        android:id="@+id/root"
+        android:animateLayoutChanges="true"
         android:background="@color/activity_light_background"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MainActivity">
+            tools:context=".presentation.actvities.MainActivity">
 
+
+            <TextView
+                android:id="@+id/textView28"
+                style="@style/TextAppearance.Material3.HeadlineSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="The Movies"
+                android:textFontWeight="600"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView"
@@ -33,11 +47,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="Now Playing"
-                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
             <TextView
                 android:id="@+id/tv_see_all_now_playing"
@@ -109,7 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Popular"
-                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/shimmer_now_playing"
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_now_playing" />
 
@@ -183,7 +199,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Top Rated"
-                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/rv_now_playing"
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_popular" />
 
@@ -257,7 +274,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Upcoming"
-                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/shimmer_top_rated"
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_top_rated" />
 
@@ -325,6 +343,18 @@
                 tools:listitem="@layout/movie_item">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <ImageView
+                android:id="@+id/iv_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:clickable="true"
+                android:background="?selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toBottomOf="@+id/textView28"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView28"
+                app:srcCompat="@drawable/round_search_24" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

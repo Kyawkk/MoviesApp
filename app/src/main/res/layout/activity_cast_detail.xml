@@ -12,13 +12,13 @@
         <import type="android.view.View"/>
         <variable
             name="castViewModel"
-            type="com.kyawzinlinn.moviesapp.presentation.now_playing_movie.CastViewModel" />
+            type="com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:scrollbarSize="0dp"
-        tools:context=".CastDetailActivity"
+        tools:context=".presentation.actvities.CastDetailActivity"
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"

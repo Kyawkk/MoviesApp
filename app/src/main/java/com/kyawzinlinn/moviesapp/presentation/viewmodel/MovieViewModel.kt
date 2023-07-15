@@ -1,9 +1,9 @@
-package com.kyawzinlinn.moviesapp.presentation.now_playing_movie
+package com.kyawzinlinn.moviesapp.presentation.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kyawzinlinn.moviesapp.domain.use_case.MovieUseCase
+import com.kyawzinlinn.moviesapp.domain.use_case.movie.MovieUseCase
 import com.kyawzinlinn.moviesapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -35,6 +35,9 @@ class MovieViewModel @Inject constructor(
 
     private val _tagMoviesState = MutableLiveData<MovieState>()
     val tagMoviesState = _tagMoviesState
+
+    private val _searchMoviesState = MutableLiveData<MovieState>()
+    val searchMoviesState = _searchMoviesState
 
     fun getNowPlayingMovies(page: String){
         movieUseCase.nowPlayingMovieUseCase(page).onEach {
@@ -129,6 +132,20 @@ class MovieViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _tagMoviesState.value = MovieState(error = it.message.toString())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getSearchMovies(query: String, page: String){
+        movieUseCase.searchMoviesUseCase(query,page).onEach {
+            when(it){
+                is Resource.Loading -> _searchMoviesState.value = MovieState(isLoading = true)
+                is Resource.Success -> {
+                    _searchMoviesState.value = MovieState(data = it.data)
+                }
+                is Resource.Error -> {
+                    _searchMoviesState.value = MovieState(error = it.message.toString())
                 }
             }
         }.launchIn(viewModelScope)

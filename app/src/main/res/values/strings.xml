@@ -6,4 +6,6 @@
     <string name="movie_rating_shared_transition">movie_rating_shared_transition</string>
 
     <string name="votes">%s Votes</string>
+    <string name="search_results">Search Results (%s)</string>
+    <string name="empty_string"> </string>
 </resources>
