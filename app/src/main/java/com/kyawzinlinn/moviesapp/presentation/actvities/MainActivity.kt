@@ -16,6 +16,7 @@ import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
+import com.kyawzinlinn.moviesapp.utils.openGitHub
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,10 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 
+        // set data to binding
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
-
-        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
         viewModel.apply {
             getNowPlayingMovies("1")
@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
             tvSeeAllUpcoming.setOnClickListener { goToSeeAllMoviesActivity(MovieType.UPCOMING) }
 
             ivSearch.setOnClickListener { goToSearchMoviesActivity() }
+            ivGithub.setOnClickListener { openGitHub(this@MainActivity) }
         }
     }
 

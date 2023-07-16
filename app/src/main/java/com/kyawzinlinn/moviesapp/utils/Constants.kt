@@ -1,5 +1,7 @@
 package com.kyawzinlinn.moviesapp.utils
 
+const val GITHUB_URL = "https://github.com/Kyawkk/MoviesApp"
+
 const val BASE_URL = "https://api.themoviedb.org/3/"
 const val IMG_URL_PREFIX_300 = "https://image.tmdb.org/t/p/w300"
 const val IMG_URL_PREFIX_500 = "https://image.tmdb.org/t/p/w500"

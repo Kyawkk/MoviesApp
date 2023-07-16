@@ -1,15 +1,16 @@
 package com.kyawzinlinn.moviesapp.presentation.actvities
 
-import android.animation.LayoutTransition
-import android.animation.ObjectAnimator
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.ChangeBounds
+import androidx.transition.Fade
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
 import com.kyawzinlinn.moviesapp.R
 import com.kyawzinlinn.moviesapp.databinding.ActivityMovieDetailBinding
 import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
@@ -22,6 +23,7 @@ import com.kyawzinlinn.moviesapp.utils.GENRE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
+import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,7 +46,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        setUpLayoutTransition(binding.parent)
 
         setUpClickListeners()
         loadMovieDetail()

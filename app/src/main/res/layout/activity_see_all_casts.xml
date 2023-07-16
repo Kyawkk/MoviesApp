@@ -194,7 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="42dp"
-            android:text="Casts And Crews"
+            android:text="Casts"
             android:textSize="18sp"
             android:textFontWeight="600"
             app:layout_constraintEnd_toEndOf="parent"

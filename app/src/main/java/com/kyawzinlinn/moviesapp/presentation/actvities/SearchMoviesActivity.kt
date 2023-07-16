@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.transition.Transition
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.lifecycle.ViewModelProvider
@@ -53,8 +54,6 @@ class SearchMoviesActivity : AppCompatActivity() {
         binding.searchHistoryViewModel = searchHistoryViewModel
         binding.lifecycleOwner = this
 
-        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-
         setUpSearchHistoryRecyclerview()
         setUpClickListeners()
     }
@@ -92,14 +91,12 @@ class SearchMoviesActivity : AppCompatActivity() {
             if (it.data != null){
                 val searchMovies = (it.data as SearchMoviesDto)?.results
 
-                Log.d("TAG", "setUpMoviesRecyclerView: ${(it.data as SearchMoviesDto).total_results}")
-
                 binding.rvSearchMovies.setHasFixedSize(true)
                 adapter = VerticalMovieItemAdapter(searchMovies!!.toMutableList()){
                     goToMovieDetailsActivity(it)
                 }
-                binding.rvSearchMovies.adapter = adapter
 
+                binding.rvSearchMovies.adapter = adapter
                 binding.rvSearchMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                         super.onScrolled(recyclerView, dx, dy)

@@ -34,8 +34,6 @@ class SearchMoviesUseCase @Inject constructor(
         }catch (e: Exception){
             val cachedSearchResults = movieDao.searchMovies(query).toMovieDto(type) as SearchMoviesDto
 
-            Log.d("TAG", "searchMovieUseCase: ${cachedSearchResults.total_results}")
-
             emit(Resource.Success(cachedSearchResults))
 
             emit(Resource.Error(e.message.toString()))

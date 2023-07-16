@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import coil.load
 import com.facebook.shimmer.ShimmerFrameLayout
+import com.kyawzinlinn.moviesapp.R
 import com.kyawzinlinn.moviesapp.data.local.database.MovieSearchHistory
 import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
@@ -24,6 +25,7 @@ import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.SearchHistoryAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.VerticalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.domain.item_animator.CustomItemAnimator
 import com.kyawzinlinn.moviesapp.utils.CastType
 import com.kyawzinlinn.moviesapp.utils.IMG_URL_PREFIX_300
 import com.kyawzinlinn.moviesapp.utils.IMG_URL_PREFIX_500
@@ -35,6 +37,7 @@ const val TAG = "TAG"
 
 @BindingAdapter("movies", "recyclerViewType")
 fun bindRecyclerView(recyclerView: RecyclerView, movies: List<Any>?, type: RecyclerviewType){
+    recyclerView.itemAnimator = CustomItemAnimator()
     when (type){
         RecyclerviewType.HORIZONTAL -> {
             (recyclerView.adapter as HorizontalMovieItemAdapter).submitList(movies?.map { it as Movie })
@@ -54,9 +57,11 @@ fun bindImage(imageView: ImageView, imgUrl: String?, size: PosterSize){
         PosterSize.W300 -> "$IMG_URL_PREFIX_300$imgUrl"
         PosterSize.W500 -> "$IMG_URL_PREFIX_500$imgUrl"
     }
-    Log.d(TAG, "bindImage: $url")
     imgUrl?.let {
-        imageView.load(url){crossfade(true)}
+        imageView.load(url){
+            error(R.drawable.no_image_place_holder)
+            crossfade(true)
+        }
     }
 }
 
@@ -74,6 +79,7 @@ fun splitDate(textView: TextView, string: String){
 
 @BindingAdapter("isShimmerLoading")
 fun showShimmer(shimmerFrameLayout: ShimmerFrameLayout, isLoading: Boolean){
+    Log.d(TAG, "showShimmer: $isLoading")
     if(isLoading) {
         shimmerFrameLayout.startShimmer()
         shimmerFrameLayout.visibility = View.VISIBLE
