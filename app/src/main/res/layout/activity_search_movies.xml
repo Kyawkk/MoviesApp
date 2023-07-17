@@ -21,6 +21,8 @@
         android:layout_width="match_parent"
         tools:context=".presentation.actvities.SearchMoviesActivity"
         android:background="@color/activity_light_background"
+        android:animateLayoutChanges="true"
+        android:id="@+id/root"
         android:layout_height="match_parent">
 
         <ImageView
@@ -49,7 +51,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/ed_search_movies"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

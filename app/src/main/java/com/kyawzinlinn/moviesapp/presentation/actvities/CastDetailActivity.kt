@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
+import androidx.viewpager2.widget.ViewPager2
+import com.kyawzinlinn.moviesapp.data.remote.dto.CastDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.CastProfilesDto
 import com.kyawzinlinn.moviesapp.databinding.ActivityCastDetailBinding
+import com.kyawzinlinn.moviesapp.domain.adapter.DotIndicatorAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
@@ -17,6 +20,10 @@ import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class CastDetailActivity : AppCompatActivity() {
@@ -42,6 +49,25 @@ class CastDetailActivity : AppCompatActivity() {
         setUpLayoutTransition(binding.parent)
         setUpClickListeners()
         setUpMoviesOfCastRecyclerView()
+        setUpDotsRecyclerView()
+    }
+
+    private fun setUpDotsRecyclerView() {
+        binding.apply {
+            viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    binding.dotIndicator.setSelectedDot(position)
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    binding.dotIndicator.setSelectedDot(position)
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    // Handle page scroll state change event
+                }
+            })
+        }
     }
 
     private fun loadAllCastDetails() {

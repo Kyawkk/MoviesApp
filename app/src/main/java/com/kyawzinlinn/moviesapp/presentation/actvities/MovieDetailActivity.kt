@@ -34,7 +34,6 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var castViewModel: CastViewModel
     private lateinit var movieId: String
-    private var isFavorite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,11 +62,6 @@ class MovieDetailActivity : AppCompatActivity() {
     private fun setUpClickListeners(){
         binding.apply {
             ivMovieDetailBack.setOnClickListener { onBackPressed() }
-            ivMovieFavorite.setOnClickListener {
-                isFavorite = !isFavorite
-                if (isFavorite) ivMovieFavorite.setImageResource(R.drawable.baseline_favorite_24)
-                else ivMovieFavorite.setImageResource(R.drawable.baseline_favorite_border_24)
-            }
 
             // go to see all movie activity
             tvSeeAllSimilarMovies.setOnClickListener {

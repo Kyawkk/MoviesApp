@@ -18,6 +18,7 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.data.remote.dto.Profile
+import com.kyawzinlinn.moviesapp.domain.adapter.DotIndicatorAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.ImageSliderAdapter
@@ -25,6 +26,7 @@ import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.SearchHistoryAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.VerticalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.domain.custom_view.SliderDotIndicator
 import com.kyawzinlinn.moviesapp.domain.item_animator.CustomItemAnimator
 import com.kyawzinlinn.moviesapp.utils.CastType
 import com.kyawzinlinn.moviesapp.utils.IMG_URL_PREFIX_300
@@ -118,13 +120,13 @@ fun bindImageSlider(viewPager: ViewPager2, profiles: List<Profile>?){
 
         val handler = Handler()
 
-// Disable clipping and over-scroll mode
+        // Disable clipping and over-scroll mode
         viewPager.clipToPadding = false
         viewPager.clipChildren = false
         viewPager.offscreenPageLimit = 4
         viewPager.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
 
-// Set up page transformer
+        // Set up page transformer
         val pageTransformer = CompositePageTransformer().apply {
             addTransformer(MarginPageTransformer(40))
             addTransformer { page, position ->
@@ -134,22 +136,25 @@ fun bindImageSlider(viewPager: ViewPager2, profiles: List<Profile>?){
         }
         viewPager.setPageTransformer(pageTransformer)
 
-// Auto-scroll the view pager
+        // Auto-scroll the view pager
         val sliderRunnable = Runnable {
-            viewPager.currentItem = viewPager.currentItem + 1
+            // infinite auto scroll
+            if (viewPager.currentItem == profiles.size - 1) viewPager.currentItem = 0
+            else viewPager.currentItem = viewPager.currentItem + 1
+
         }
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 handler.removeCallbacks(sliderRunnable)
-                handler.postDelayed(sliderRunnable, 2000)
+                handler.postDelayed(sliderRunnable, 1500)
             }
         })
 
-// Start auto-scroll after a delay
-        handler.postDelayed(sliderRunnable, 2000)
+        // Start auto-scroll after a delay
+        handler.postDelayed(sliderRunnable, 1500)
 
-// Center the first item initially
+        // Center the first item initially
         viewPager
 
     }
@@ -171,4 +176,9 @@ fun bindCastAvatarRecyclerview(recyclerView: RecyclerView, casts: List<Cast>?, t
     }
 
     adapter.submitList(casts)
+}
+
+@BindingAdapter("dot_size")
+fun bindDotSize(sliderDotIndicator: SliderDotIndicator, dotSize: Int?){
+    sliderDotIndicator.setTotalDots(dotSize!!)
 }

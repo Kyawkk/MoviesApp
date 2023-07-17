@@ -194,6 +194,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Genres"
                 android:textFontWeight="600"
+                android:visibility="@{movieViewModel.movieDetailState.data == null ? View.INVISIBLE : View.VISIBLE}"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
@@ -254,6 +255,7 @@
                 android:layout_marginTop="24dp"
                 android:text="Overview"
                 android:textFontWeight="600"
+                android:visibility="@{movieViewModel.movieDetailState.data == null ? View.INVISIBLE : View.VISIBLE}"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
                 app:layout_constraintTop_toBottomOf="@+id/genre_shimmer" />
@@ -471,19 +473,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/round_chevron_left_24" />
-
-            <ImageView
-                android:id="@+id/iv_movie_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:elevation="1dp"
-                android:padding="8dp"
-                android:background="@drawable/button_bg"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_movie_detail_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/iv_movie_detail_back"
-                app:srcCompat="@drawable/baseline_favorite_border_24" />
 
             <TextView
                 android:id="@+id/tv_see_all_similar_movies"

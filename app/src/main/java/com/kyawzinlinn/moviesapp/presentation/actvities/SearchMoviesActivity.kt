@@ -5,11 +5,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.transition.Transition
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -50,12 +54,45 @@ class SearchMoviesActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
+        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+
         binding.viewModel = viewModel
         binding.searchHistoryViewModel = searchHistoryViewModel
         binding.lifecycleOwner = this
 
         setUpSearchHistoryRecyclerview()
         setUpClickListeners()
+        showSearchSuggestions()
+    }
+
+    private fun showSearchSuggestions() {
+        binding.edSearchMovies.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun onTextChanged(query: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                viewModel.getSearchSuggestions(query.toString())
+                viewModel.searchSuggestionsMoviesState.observe(this@SearchMoviesActivity){
+                    if (it.data != null){
+                        val suggestions = (it.data as SearchMoviesDto).results.map{ it.title }.take(5)
+                        val suggestionAdapter = ArrayAdapter(this@SearchMoviesActivity,android.R.layout.simple_list_item_1,suggestions)
+                        binding.apply {
+                            edSearchMovies.setAdapter(suggestionAdapter)
+                            edSearchMovies.threshold = 1
+
+                            edSearchMovies.setOnItemClickListener { adapterView, view, i, l ->
+                                // store search history
+                                val searchQuery = binding.edSearchMovies.text.toString()
+                                if(searchQuery.isNotEmpty()) searchHistoryViewModel?.addMovieSearchHistory(MovieSearchHistory(0,searchQuery))
+
+                                performSearch()
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+
+        })
     }
 
     private fun setUpClickListeners() {
