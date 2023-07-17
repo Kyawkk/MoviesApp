@@ -81,7 +81,7 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun bindUI() {
-        binding.rvGenre.adapter = GenreAdapter(){
+        binding.rvGenre.adapter = GenreAdapter {
             // show all movies that appropriate with genre
             val intent = Intent(this, SeeAllMoviesActivity::class.java)
             intent.putExtra(MOVIE_TYPE_INTENT_EXTRA,MovieType.TAG_MOVIES)
@@ -107,8 +107,8 @@ class MovieDetailActivity : AppCompatActivity() {
 
     private fun loadMovieDetail() {
         movieId = intent?.extras?.getString(MOVIE_ID_INTENT_EXTRA).toString()
-        movieViewModel.getMovieDetails(movieId!!)
-        movieViewModel.getSimilarMovies(movieId!!,"1")
+        movieViewModel.getMovieDetails(movieId)
+        movieViewModel.getSimilarMovies(movieId,"1")
         movieViewModel.movieDetailState.observe(this){
             if (it.error.isNotEmpty()) showSnackBar(window.decorView,it.error,{
 

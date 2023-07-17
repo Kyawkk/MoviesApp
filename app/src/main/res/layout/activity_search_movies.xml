@@ -12,6 +12,10 @@
             type="com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel" />
 
         <variable
+            name="totalResults"
+            type="String" />
+
+        <variable
             name="searchHistoryViewModel"
             type="com.kyawzinlinn.moviesapp.presentation.viewmodel.SearchHistoryViewModel" />
 
@@ -135,7 +139,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{@string/search_results(String.valueOf(((SearchMoviesDto)viewModel.searchMoviesState.data).total_results))}"
+            android:text="@{@string/search_results(totalResults == null ? @string/empty_string : totalResults)}"
             android:textFontWeight="600"
             app:layout_constraintStart_toStartOf="@+id/ed_search_movies"
             app:layout_constraintTop_toBottomOf="@+id/rv_search_history" />

@@ -15,7 +15,7 @@ class DotCircle(context: Context?) : View(context) {
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     fun setCircleColor(c: Int){
         val colorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), circleColor, c)
-        colorAnimator.duration = 300 // Animation duration in milliseconds
+        colorAnimator.duration = 200 // Animation duration in milliseconds
         colorAnimator.addUpdateListener { animator ->
             circleColor = animator.animatedValue as Int
             circlePaint.color = circleColor

@@ -18,6 +18,7 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.data.remote.dto.Profile
+import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
 import com.kyawzinlinn.moviesapp.domain.adapter.DotIndicatorAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
@@ -115,7 +116,7 @@ fun bindHistoryRecyclerview(recyclerView: RecyclerView, searchHistories: List<Mo
 @BindingAdapter("sliderImages")
 fun bindImageSlider(viewPager: ViewPager2, profiles: List<Profile>?){
     if(profiles != null && profiles.isNotEmpty()){
-        val sliderAdapter = ImageSliderAdapter(profiles!!.map { it.file_path })
+        val sliderAdapter = ImageSliderAdapter(profiles.map { it.file_path })
         viewPager.adapter = sliderAdapter
 
         val handler = Handler()

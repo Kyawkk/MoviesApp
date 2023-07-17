@@ -30,11 +30,12 @@
 
             <TextView
                 android:id="@+id/textView28"
-                style="@style/TextAppearance.Material3.HeadlineSmall"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="The Movies"
+                android:textSize="20dp"
                 android:textFontWeight="600"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

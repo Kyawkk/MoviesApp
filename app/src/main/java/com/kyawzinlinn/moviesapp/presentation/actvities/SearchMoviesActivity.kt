@@ -126,7 +126,8 @@ class SearchMoviesActivity : AppCompatActivity() {
     private fun setUpMoviesRecyclerView() {
         viewModel.searchMoviesState.observe(this){
             if (it.data != null){
-                val searchMovies = (it.data as SearchMoviesDto)?.results
+                val searchMovies = (it.data as SearchMoviesDto).results
+                binding.totalResults = it.data.total_results.toString()
 
                 binding.rvSearchMovies.setHasFixedSize(true)
                 adapter = VerticalMovieItemAdapter(searchMovies!!.toMutableList()){

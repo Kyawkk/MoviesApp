@@ -13,9 +13,7 @@ class DotIndicatorAdapter: ListAdapter<String,DotIndicatorAdapter.ViewHolder>(Di
 
     private var selectedPosition = 0
     private lateinit var context: Context
-    class ViewHolder(val binding: DotItemBinding): RecyclerView.ViewHolder(binding.root) {
-
-    }
+    class ViewHolder(val binding: DotItemBinding): RecyclerView.ViewHolder(binding.root)
 
     fun setDotSelected(position: Int){
         selectedPosition = position

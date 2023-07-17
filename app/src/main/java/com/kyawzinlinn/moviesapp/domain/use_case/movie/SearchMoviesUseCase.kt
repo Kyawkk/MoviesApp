@@ -11,7 +11,6 @@ import com.kyawzinlinn.moviesapp.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import kotlin.math.log
 
 class SearchMoviesUseCase @Inject constructor(
     val repository: MovieRepository,
@@ -21,9 +20,9 @@ class SearchMoviesUseCase @Inject constructor(
         emit(Resource.Loading())
         val type = MovieType.SEARCH_RESULTS
         try {
-            val searchMovies = repository.getSearchMovies(query,page)
+            val searchMovies = repository.getSearchMovies(query, page)
 
-            if (searchMovies.results.size != 0){
+            if (searchMovies.results.size != 0) {
                 val searchDatabaseMovies = searchMovies.results.toDatabaseMovie(type.toString())
 
                 movieDao.deleteMovies(type.toString())
@@ -31,14 +30,15 @@ class SearchMoviesUseCase @Inject constructor(
                 emit(Resource.Success(searchMovies))
             }
 
-        }catch (e: Exception){
-            val cachedSearchResults = movieDao.searchMovies(query).toMovieDto(type) as SearchMoviesDto
+        } catch (e: Exception) {
+            val cachedSearchResults =
+                movieDao.searchMovies(query).toMovieDto(type) as SearchMoviesDto
 
             emit(Resource.Success(cachedSearchResults))
 
+            Log.d("TAG", "invokeSS: ${cachedSearchResults.total_results}")
+
             emit(Resource.Error(e.message.toString()))
         }
-
-
     }
 }

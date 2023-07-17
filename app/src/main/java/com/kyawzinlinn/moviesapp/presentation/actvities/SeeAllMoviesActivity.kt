@@ -188,7 +188,7 @@ class SeeAllMoviesActivity : AppCompatActivity() {
         viewModel.popularMovieState.observe(this) {
             binding.isLoading = it.isLoading
             if (it.data != null) {
-                binding.movies = (it.data as PopularMoviesDto)?.results
+                binding.movies = (it.data as PopularMoviesDto).results
                 movies.clear()
                 movies.addAll((it.data).results)
             }

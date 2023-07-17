@@ -39,7 +39,7 @@ fun List<DatabaseMovie>.toMovie(): List<Movie>{
             it.adult,
             it.backdrop_path,
             listOf(),
-            it.movieId!!,
+            it.movieId,
             it.original_language,
             it.original_title,
             it.overview,
@@ -55,6 +55,7 @@ fun List<DatabaseMovie>.toMovie(): List<Movie>{
 }
 
 fun List<DatabaseMovie>.toMovieDto(dtoType: MovieType): Any{
+    val movies = this.toMovie()
     return when(dtoType){
         MovieType.NOW_PLAYING -> NowPlayingMoviesDto(results = this.toMovie())
         MovieType.POPULAR -> PopularMoviesDto(results = this.toMovie())
@@ -62,6 +63,6 @@ fun List<DatabaseMovie>.toMovieDto(dtoType: MovieType): Any{
         MovieType.UPCOMING -> UpComingMoviesDto(results =  this.toMovie())
         MovieType.SIMILAR -> SimilarMoviesDto(results = this.toMovie())
         MovieType.TAG_MOVIES -> SimilarMoviesDto(results = this.toMovie())
-        MovieType.SEARCH_RESULTS -> SearchMoviesDto(results = this.toMovie(), total_results = this.toMovie().size)
+        MovieType.SEARCH_RESULTS -> SearchMoviesDto(results = this.toMovie(), total_results = movies.size)
     }
 }
