@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.remote.MovieApi
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
+import com.kyawzinlinn.moviesapp.data.remote.dto.MoviesOfCastDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
@@ -20,7 +21,10 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.repository.MovieRepositoryImpl
 import com.kyawzinlinn.moviesapp.databinding.ActivitySeeAllMoviesBinding
 import com.kyawzinlinn.moviesapp.domain.adapter.VerticalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
+import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.CAST_NAME_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.GENRE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
@@ -37,6 +41,7 @@ class SeeAllMoviesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySeeAllMoviesBinding
     private lateinit var viewModel: MovieViewModel
+    private lateinit var castViewModel: CastViewModel
     private var isLoading = false
     private var currentPage = 1
     private lateinit var adapter: VerticalMovieItemAdapter
@@ -54,6 +59,7 @@ class SeeAllMoviesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        castViewModel = ViewModelProvider(this).get(CastViewModel::class.java)
 
         bindUI()
         loadInitialMovies()
@@ -122,6 +128,11 @@ class SeeAllMoviesActivity : AppCompatActivity() {
                 title = loadTagMovies(movies)
             }
 
+            MovieType.MOVIES_BY_CAST -> {
+                title = intent?.extras?.getString(CAST_NAME_INTENT_EXTRA).toString()
+                loadMoviesByCast(movies)
+            }
+
             else -> {}
         }
         adapter = VerticalMovieItemAdapter(movies){
@@ -130,6 +141,23 @@ class SeeAllMoviesActivity : AppCompatActivity() {
 
         binding.tvSeeAllMoviesTitle.text = title
 
+    }
+
+    private fun loadMoviesByCast(movies: MutableList<Movie>) {
+        // hide search icon
+        binding.ivSearch.visibility = View.GONE
+
+        val castId = intent?.extras?.getString(CAST_ID_INTENT_EXTRA).toString()
+        castViewModel.getMoviesOfCast(castId)
+        castViewModel.moviesOfCastState.observe(this){
+            binding.isLoading = it.isLoading
+            if (!it.isLoading){
+                binding.movies = (it.data as MoviesOfCastDto).cast
+
+                movies.clear()
+                movies.addAll(it.data.cast)
+            }
+        }
     }
 
     private fun loadTagMovies(
@@ -244,7 +272,7 @@ class SeeAllMoviesActivity : AppCompatActivity() {
 
             MovieType.TAG_MOVIES -> loadMoreTagMovies()
 
-            else -> {}
+            else -> { binding.pbLoadMore.visibility = View.GONE}
         }
 
     }

@@ -12,6 +12,7 @@ const val MOVIE_TYPE_INTENT_EXTRA = "movie_type_intent_extra"
 const val GENRE_INTENT_EXTRA = "genre_intent_extra"
 
 const val CAST_ID_INTENT_EXTRA = "cast_id_intent_extra"
+const val CAST_NAME_INTENT_EXTRA = "cast_name_intent_extra"
 
 const val TAG = "Log TAG"
 

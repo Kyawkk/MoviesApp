@@ -16,7 +16,11 @@ import com.kyawzinlinn.moviesapp.domain.adapter.DotIndicatorAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.CAST_NAME_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.MovieType
+import com.kyawzinlinn.moviesapp.utils.Resource
 import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +34,7 @@ class CastDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCastDetailBinding
     private lateinit var viewModel: CastViewModel
     private var castId = ""
+    private var castName = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -81,7 +86,18 @@ class CastDetailActivity : AppCompatActivity() {
     private fun setUpClickListeners() {
         binding.apply {
             ivCastDetailBack.setOnClickListener { onBackPressed() }
+            tvMoviesByCastSeeAll.setOnClickListener { goToSeeAllCastMoviesActivity() }
+
         }
+    }
+
+    private fun goToSeeAllCastMoviesActivity() {
+        val intent = Intent(this, SeeAllMoviesActivity::class.java)
+        intent.putExtra(MOVIE_TYPE_INTENT_EXTRA, MovieType.MOVIES_BY_CAST)
+        intent.putExtra(CAST_ID_INTENT_EXTRA, castId)
+        intent.putExtra(CAST_NAME_INTENT_EXTRA, castName)
+
+        if (castName.isNotEmpty()) startActivity(intent)
     }
 
     private fun setUpMoviesOfCastRecyclerView() {
@@ -92,6 +108,9 @@ class CastDetailActivity : AppCompatActivity() {
         }
 
         viewModel.castDetailsState.observe(this){
+
+            if (it.data != null) castName = (it.data as CastDetailsDto).name
+
             if (it.error.isNotEmpty()) showSnackBar(window.decorView.rootView,it.error){
                 loadAllCastDetails()
             }
