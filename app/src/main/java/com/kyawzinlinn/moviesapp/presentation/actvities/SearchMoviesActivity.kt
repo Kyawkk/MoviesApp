@@ -116,6 +116,10 @@ class SearchMoviesActivity : AppCompatActivity() {
     }
 
     private fun performSearch() {
+        // hide not found layout
+        binding.notFoundLayout.visibility = View.GONE
+        binding.rvSearchMovies.visibility = View.GONE
+
         query = binding.edSearchMovies.text.toString()
 
         currentPage = 1
@@ -128,11 +132,13 @@ class SearchMoviesActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         viewModel.searchMoviesState.observe(this){
             if (it.data != null){
+                binding.rvSearchMovies.visibility = View.VISIBLE
+
                 val searchMovies = (it.data as SearchMoviesDto).results
                 binding.totalResults = it.data.total_results.toString()
 
                 binding.rvSearchMovies.setHasFixedSize(true)
-                adapter = VerticalMovieItemAdapter(searchMovies!!.toMutableList()){
+                adapter = VerticalMovieItemAdapter(searchMovies.toMutableList()){
                     goToMovieDetailsActivity(it)
                 }
 

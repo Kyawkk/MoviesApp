@@ -10,5 +10,6 @@ data class MovieUseCase @Inject constructor(
     val movieDetailsUseCase: MovieDetailsUseCase,
     val similarMoviesUseCase: SimilarMoviesUseCase,
     val tagMoviesUseCase: TagMoviesUseCase,
-    val searchMoviesUseCase: SearchMoviesUseCase
+    val searchMoviesUseCase: SearchMoviesUseCase,
+    val trailersUseCase: TrailersUseCase
 )

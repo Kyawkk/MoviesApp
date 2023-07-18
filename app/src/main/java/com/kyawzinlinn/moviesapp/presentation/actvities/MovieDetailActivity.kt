@@ -2,27 +2,29 @@ package com.kyawzinlinn.moviesapp.presentation.actvities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
-import androidx.transition.ChangeBounds
-import androidx.transition.Fade
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
-import com.kyawzinlinn.moviesapp.R
+import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto
 import com.kyawzinlinn.moviesapp.databinding.ActivityMovieDetailBinding
 import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.domain.adapter.TrailerItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.GENRE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.MOVIE_NAME_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
+import com.kyawzinlinn.moviesapp.utils.RecyclerviewType
+import com.kyawzinlinn.moviesapp.utils.playYouTubeVideo
 import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,7 @@ class MovieDetailActivity : AppCompatActivity() {
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var castViewModel: CastViewModel
     private lateinit var movieId: String
+    private lateinit var movieName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +80,17 @@ class MovieDetailActivity : AppCompatActivity() {
                 intent.putExtra(MOVIE_ID_INTENT_EXTRA,movieId)
                 startActivity(intent)
             }
+
+            // go to see all trailers activity
+            tvSeeAllTrailers.setOnClickListener { goToSeeAllTrailersActivity() }
         }
+    }
+
+    private fun goToSeeAllTrailersActivity() {
+        val intent = Intent(this,SeeAllTrailersActivity::class.java)
+        intent.putExtra(MOVIE_ID_INTENT_EXTRA,movieId)
+        intent.putExtra(MOVIE_NAME_INTENT_EXTRA,movieName)
+        startActivity(intent)
     }
 
     private fun bindUI() {
@@ -103,13 +116,25 @@ class MovieDetailActivity : AppCompatActivity() {
             intent.putExtra(MOVIE_ID_INTENT_EXTRA,movieId)
             startActivity(intent,options.toBundle())
         }
+
+        binding.rvTrailers.adapter = TrailerItemAdapter(RecyclerviewType.HORIZONTAL){
+            playYouTubeVideo(it)
+        }
     }
 
     private fun loadMovieDetail() {
         movieId = intent?.extras?.getString(MOVIE_ID_INTENT_EXTRA).toString()
-        movieViewModel.getMovieDetails(movieId)
-        movieViewModel.getSimilarMovies(movieId,"1")
+
+        movieViewModel.apply {
+            getMovieDetails(movieId)
+            getSimilarMovies(movieId,"1")
+            getMovieTrailers(movieId)
+        }
+
         movieViewModel.movieDetailState.observe(this){
+
+            if (it.data != null) movieName = (it.data as MovieDetailsDto).title
+
             if (it.error.isNotEmpty()) showSnackBar(window.decorView,it.error,{
 
             })

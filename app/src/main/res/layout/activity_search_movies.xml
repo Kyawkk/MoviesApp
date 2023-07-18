@@ -202,6 +202,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:notFoundLayoutTitle="No Result"
+            android:id="@+id/not_found_layout"
             app:notFoundLayoutDesc="No movie is not found.\nTry a more general keyword"
             android:visibility="@{(totalResults.trim().charAt(0) == '0') ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="@+id/shimmerFrameLayout" />

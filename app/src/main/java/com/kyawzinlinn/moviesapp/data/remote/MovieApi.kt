@@ -7,6 +7,7 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.utils.TOKEN
 import retrofit2.http.GET
@@ -63,8 +64,15 @@ interface MovieApi {
     suspend fun searchMovies(
         @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
         @Query("query") query: String,
+        @Query("is_adult") isAdult: Boolean,
         @Query("page") page: String,
     ): SearchMoviesDto
+
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieTrailers(
+        @Header("Authorization") token: String = "Bearer ".plus(TOKEN),
+        @Path("movie_id") movieId: String
+    ): TrailersDto
 
 
 }

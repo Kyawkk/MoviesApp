@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -21,7 +22,11 @@ object MovieApiModule {
     @Provides
     @Singleton
     fun provideMovieApi(): MovieApi{
+        val mHttpLoggingInterceptor = HttpLoggingInterceptor()
+            .setLevel(HttpLoggingInterceptor.Level.BODY)
+
         val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(mHttpLoggingInterceptor)
             .connectTimeout(10,TimeUnit.SECONDS)
             .build()
         return Retrofit.Builder()

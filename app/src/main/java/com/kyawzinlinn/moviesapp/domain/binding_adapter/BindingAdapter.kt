@@ -1,7 +1,6 @@
 package com.kyawzinlinn.moviesapp.domain.binding_adapter
 
 import android.os.Handler
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,13 +14,14 @@ import com.facebook.shimmer.ShimmerFrameLayout
 import com.kyawzinlinn.moviesapp.R
 import com.kyawzinlinn.moviesapp.data.local.database.MovieSearchHistory
 import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
+import com.kyawzinlinn.moviesapp.data.remote.dto.CastDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.data.remote.dto.Profile
-import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
-import com.kyawzinlinn.moviesapp.domain.adapter.DotIndicatorAdapter
+import com.kyawzinlinn.moviesapp.data.remote.dto.TrailerMovie
 import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.domain.adapter.TrailerItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.ImageSliderAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastItemAdapter
@@ -68,10 +68,20 @@ fun bindImage(imageView: ImageView, imgUrl: String?, size: PosterSize){
     }
 }
 
+@BindingAdapter("youTubeThumbnail")
+fun bindYouTubeThumbnail(imageView: ImageView, videoKey: String){
+    val thumbnailUrl = "https://img.youtube.com/vi/${videoKey}/hqdefault.jpg"
+    imageView.load(thumbnailUrl){crossfade(true)}
+}
+
 @BindingAdapter("setAge")
-fun bindCastAge(textView: TextView, dateOfBirth: String?){
+fun bindCastAge(textView: TextView, castDetailsDto: CastDetailsDto?){
     try {
-        if (!dateOfBirth.isNullOrEmpty()) textView.text = "$dateOfBirth (${calculateAge(dateOfBirth)})"
+        val birthday = castDetailsDto?.birthday.toString()
+        val deathDay = castDetailsDto?.deathday.toString().trim()
+        
+        if (deathDay == "null") textView.text = "$birthday (${calculateAge(birthday)})"
+        else textView.text = "$birthday (Died at $deathDay)"
     }catch (e: Exception){}
 }
 
@@ -82,7 +92,6 @@ fun splitDate(textView: TextView, string: String){
 
 @BindingAdapter("isShimmerLoading")
 fun showShimmer(shimmerFrameLayout: ShimmerFrameLayout, isLoading: Boolean){
-    Log.d(TAG, "showShimmer: $isLoading")
     if(isLoading) {
         shimmerFrameLayout.startShimmer()
         shimmerFrameLayout.visibility = View.VISIBLE
@@ -182,4 +191,11 @@ fun bindCastAvatarRecyclerview(recyclerView: RecyclerView, casts: List<Cast>?, t
 @BindingAdapter("dot_size")
 fun bindDotSize(sliderDotIndicator: SliderDotIndicator, dotSize: Int?){
     sliderDotIndicator.setTotalDots(dotSize!!)
+}
+
+@BindingAdapter("trailers")
+fun bindTrailersRecyclerview(recyclerView: RecyclerView, trailers: List<TrailerMovie>?){
+    val adapter = recyclerView.adapter as TrailerItemAdapter
+    recyclerView.adapter = adapter
+    adapter.submitList(trailers)
 }

@@ -9,6 +9,7 @@
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto"/>
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto"/>
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto"/>
+        <import type="com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto"/>
         <import type="com.kyawzinlinn.moviesapp.utils.RecyclerviewType"/>
         <import type="com.kyawzinlinn.moviesapp.utils.CastType"/>
 
@@ -286,7 +287,7 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <TextView
-                android:id="@+id/textView15"
+                android:id="@+id/tv_overview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -298,16 +299,88 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <TextView
+                android:id="@+id/textView31"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Trailers"
+                android:textFontWeight="600"
+                android:textSize="18sp"
+                android:visibility="@{movieViewModel.trailerState.data == null ? View.INVISIBLE : View.VISIBLE}"
+                app:layout_constraintStart_toStartOf="@+id/materialCardView"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
+
+            <TextView
                 android:id="@+id/textView16"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="Casts"
                 android:textFontWeight="600"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
-                app:layout_constraintTop_toBottomOf="@+id/textView15" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_trailers" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                isShimmerLoading="@{movieViewModel.trailerState.loading}"
+                android:layout_marginEnd="16dp"
+                android:translationZ="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView31">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="113dp"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="113dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/place_holder" />
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="113dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/place_holder" />
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="113dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/place_holder" />
+
+                    <View
+                        android:layout_width="200dp"
+                        android:layout_height="113dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/place_holder" />
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trailers"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                tools:listitem="@layout/horizontal_trailer_item"
+                android:orientation="horizontal"
+                trailers="@{((TrailersDto)movieViewModel.trailerState.data).results}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 isShimmerLoading="@{castViewModel.movieCastsState.loading}"
@@ -499,6 +572,20 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+            <TextView
+                android:id="@+id/tv_see_all_trailers"
+                style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="See All"
+                android:visibility="@{movieViewModel.trailerState.data == null ? View.INVISIBLE : View.VISIBLE}"
+                android:textColor="@color/primary_color"
+                android:textFontWeight="600"
+                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textView31" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

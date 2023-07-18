@@ -9,6 +9,7 @@ const val TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNzhmZjBiMTExNWY1NzJhMDFjNDJl
 
 const val MOVIE_ID_INTENT_EXTRA = "movie_id_intent_extra"
 const val MOVIE_TYPE_INTENT_EXTRA = "movie_type_intent_extra"
+const val MOVIE_NAME_INTENT_EXTRA = "movie_name_intent_extra"
 const val GENRE_INTENT_EXTRA = "genre_intent_extra"
 
 const val CAST_ID_INTENT_EXTRA = "cast_id_intent_extra"

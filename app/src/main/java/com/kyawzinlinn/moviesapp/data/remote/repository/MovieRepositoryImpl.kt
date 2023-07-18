@@ -8,6 +8,7 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import javax.inject.Inject
@@ -44,6 +45,10 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSearchMovies(query: String, page: String): SearchMoviesDto {
-        return api.searchMovies(query = query, page = page)
+        return api.searchMovies(query = query, page = page, isAdult = true)
+    }
+
+    override suspend fun getMovieTrailers(movieId: String): TrailersDto {
+        return api.getMovieTrailers(movieId = movieId)
     }
 }

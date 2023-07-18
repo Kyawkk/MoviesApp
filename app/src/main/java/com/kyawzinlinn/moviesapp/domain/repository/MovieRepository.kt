@@ -7,6 +7,7 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
+import com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
 
 interface MovieRepository {
@@ -24,4 +25,6 @@ interface MovieRepository {
     suspend fun getMoviesByTagName(genreId: String, page: String): TagMoviesDto
 
     suspend fun getSearchMovies(query: String, page: String): SearchMoviesDto
+
+    suspend fun getMovieTrailers(movieId: String): TrailersDto
 }

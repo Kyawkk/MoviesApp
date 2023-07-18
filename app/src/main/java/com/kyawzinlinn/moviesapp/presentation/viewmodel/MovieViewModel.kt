@@ -42,6 +42,9 @@ class MovieViewModel @Inject constructor(
     private val _searchSuggestionsMoviesState = MutableLiveData<MovieState>()
     val searchSuggestionsMoviesState = _searchSuggestionsMoviesState
 
+    private val _trailersState = MutableLiveData<MovieState>()
+    val trailerState = _trailersState
+
     fun getNowPlayingMovies(page: String){
         movieUseCase.nowPlayingMovieUseCase(page).onEach {
             when(it){
@@ -163,6 +166,20 @@ class MovieViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _searchSuggestionsMoviesState.value = MovieState(error = it.message.toString())
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getMovieTrailers(movieId: String){
+        movieUseCase.trailersUseCase(movieId).onEach {
+            when(it){
+                is Resource.Loading -> _trailersState.value = MovieState(isLoading = true)
+                is Resource.Success -> {
+                    _trailersState.value = MovieState(data = it.data)
+                }
+                is Resource.Error -> {
+                    _trailersState.value = MovieState(error = it.message.toString())
                 }
             }
         }.launchIn(viewModelScope)

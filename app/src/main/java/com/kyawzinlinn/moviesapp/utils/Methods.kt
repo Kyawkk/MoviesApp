@@ -1,5 +1,6 @@
 package com.kyawzinlinn.moviesapp.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -38,3 +39,4 @@ fun openGitHub(context: Context){
         Toast.makeText(context,"App is not found to open the link!",Toast.LENGTH_SHORT).show()
     }
 }
+
