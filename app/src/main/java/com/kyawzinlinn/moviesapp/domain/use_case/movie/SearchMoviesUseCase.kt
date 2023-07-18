@@ -22,7 +22,7 @@ class SearchMoviesUseCase @Inject constructor(
         try {
             val searchMovies = repository.getSearchMovies(query, page)
 
-            if (searchMovies.results.size != 0) {
+            if (searchMovies != null) {
                 val searchDatabaseMovies = searchMovies.results.toDatabaseMovie(type.toString())
 
                 movieDao.deleteMovies(type.toString())
@@ -35,8 +35,6 @@ class SearchMoviesUseCase @Inject constructor(
                 movieDao.searchMovies(query).toMovieDto(type) as SearchMoviesDto
 
             emit(Resource.Success(cachedSearchResults))
-
-            Log.d("TAG", "invokeSS: ${cachedSearchResults.total_results}")
 
             emit(Resource.Error(e.message.toString()))
         }

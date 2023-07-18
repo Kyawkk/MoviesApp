@@ -124,6 +124,8 @@ class SearchMoviesActivity : AppCompatActivity() {
     }
 
     private fun setUpMoviesRecyclerView() {
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         viewModel.searchMoviesState.observe(this){
             if (it.data != null){
                 val searchMovies = (it.data as SearchMoviesDto).results

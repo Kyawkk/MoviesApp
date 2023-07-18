@@ -5,6 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
+import com.kyawzinlinn.moviesapp.data.remote.dto.MoviesOfCastDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.PopularMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.SearchMoviesDto
@@ -64,5 +65,6 @@ fun List<DatabaseMovie>.toMovieDto(dtoType: MovieType): Any{
         MovieType.SIMILAR -> SimilarMoviesDto(results = this.toMovie())
         MovieType.TAG_MOVIES -> SimilarMoviesDto(results = this.toMovie())
         MovieType.SEARCH_RESULTS -> SearchMoviesDto(results = this.toMovie(), total_results = movies.size)
+        else -> {}
     }
 }

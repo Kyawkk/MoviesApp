@@ -5,5 +5,6 @@ Movie App
 - Data Binding
 - View Binding
 - MVVM
-- Data Caching
+- Offline Data Caching
+- Custom View Components using Canvas
   

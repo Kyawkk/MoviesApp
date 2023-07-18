@@ -17,6 +17,7 @@ import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.openGitHub
+import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
 
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+
+        setUpLayoutTransition(binding.parent)
 
         // set data to binding
         binding.lifecycleOwner = this

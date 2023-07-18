@@ -3,4 +3,14 @@
     <declare-styleable name="SliderDotIndicator">
         <attr name="dot_size" format="integer"/>
     </declare-styleable>
+
+    <declare-styleable name="NotFoundLayout">
+        <attr name="notFoundLayoutTitle" format="string"/>
+        <attr name="notFoundLayoutDesc" format="string"/>
+    </declare-styleable>
+
+    <!--<declare-styleable name="NotFoundLayout">
+        <attr name="notFoundLayoutTitle" format="string"/>
+        <attr name="notFoundLayoutDesc" format="string"/>
+    </declare-styleable>-->
 </resources>
