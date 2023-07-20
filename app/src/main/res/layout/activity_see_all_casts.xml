@@ -6,6 +6,7 @@
     <data>
         <import type="com.kyawzinlinn.moviesapp.utils.CastType"/>
         <import type="com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto"/>
+        <import type="android.view.View"/>
         <variable
             name="castViewModel"
             type="com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel" />
@@ -187,6 +188,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+            android:id="@+id/not_found_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{((CastsDto)castViewModel.movieCastsState.data).cast.size == 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:hideButton="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:notFoundLayoutDesc="No casts found!"
+            app:notFoundLayoutTitle="No Casts" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

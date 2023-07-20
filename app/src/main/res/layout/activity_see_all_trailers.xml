@@ -208,6 +208,18 @@
             app:spanCount="2"
             tools:listitem="@layout/vertical_trailer_item" />
 
+        <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:hideButton="true"
+            android:visibility="@{((TrailersDto)viewmodel.trailerState.data).results.size == 0 ? View.VISIBLE : View.GONE}"
+            app:notFoundLayoutTitle="No Trailers"
+            app:notFoundLayoutDesc="No trailers found!"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

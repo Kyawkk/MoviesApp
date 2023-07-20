@@ -112,6 +112,9 @@ class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionRe
     }
 
     private fun bindUI() {
+
+        hideAllNotFoundLayouts()
+
         binding.rvGenre.adapter = GenreAdapter {
             // show all movies that appropriate with genre
             val intent = Intent(this, SeeAllMoviesActivity::class.java)
@@ -143,6 +146,14 @@ class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionRe
             if (it.error.isNotEmpty() || it.error.isNotBlank()) {
                 binding.notFoundLayout.visibility = View.VISIBLE
             }
+        }
+    }
+
+    private fun hideAllNotFoundLayouts() {
+        binding.apply {
+            notFoundCasts.visibility = View.GONE
+            notFoundTrailers.visibility = View.GONE
+            notFoundSimilar.visibility = View.GONE
         }
     }
 

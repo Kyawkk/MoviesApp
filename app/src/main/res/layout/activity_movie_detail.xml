@@ -201,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/genre_shimmer"
+                android:id="@+id/shimmer_genre"
                 isShimmerLoading="@{movieViewModel.movieDetailState.loading}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -248,6 +248,21 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
+            <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hideButton="true"
+                app:hideImage="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toTopOf="@id/shimmer_genre"
+                app:layout_constraintBottom_toBottomOf="@id/shimmer_genre"
+                app:notFoundLayoutTitle="No Genres"
+                app:notFoundLayoutDesc="No genres found!"
+                android:visibility="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).genres.size == 0 ? View.VISIBLE : View.GONE}"/>
+
             <TextView
                 android:id="@+id/textView14"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
@@ -259,7 +274,7 @@
                 android:visibility="@{movieViewModel.movieDetailState.data == null ? View.INVISIBLE : View.VISIBLE}"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
-                app:layout_constraintTop_toBottomOf="@+id/genre_shimmer" />
+                app:layout_constraintTop_toBottomOf="@+id/shimmer_genre" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/overview_shimmer"
@@ -299,7 +314,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
             <TextView
-                android:id="@+id/textView31"
+                android:id="@+id/tv_trailers_title"
                 style="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -307,7 +322,6 @@
                 android:text="Trailers"
                 android:textFontWeight="600"
                 android:textSize="18sp"
-                android:visibility="@{((TrailersDto)movieViewModel.trailerState.data).results.size == 0 ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
                 app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
 
@@ -324,17 +338,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_trailers" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_trailers"
+                isShimmerLoading="@{movieViewModel.trailerState.loading}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                isShimmerLoading="@{movieViewModel.trailerState.loading}"
                 android:layout_marginEnd="16dp"
-                android:id="@+id/shimmer_trailers"
                 android:translationZ="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView31">
+                app:layout_constraintTop_toBottomOf="@+id/tv_trailers_title">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -381,7 +395,23 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView31" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_trailers_title" />
+
+            <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+                android:id="@+id/not_found_trailers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="@{((TrailersDto)movieViewModel.trailerState.data).results.size == 0 ? View.VISIBLE : View.GONE}"
+                app:hideButton="true"
+                app:hideImage="true"
+                app:layout_constraintBottom_toBottomOf="@+id/shimmer_trailers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/shimmer_trailers"
+                app:notFoundLayoutDesc="No trailers found!"
+                app:notFoundLayoutTitle="No Trailers" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 isShimmerLoading="@{castViewModel.movieCastsState.loading}"
@@ -471,9 +501,23 @@
                 app:layout_constraintEnd_toEndOf="@id/overview_shimmer"
                 app:layout_constraintStart_toStartOf="@id/overview_shimmer"
                 app:layout_constraintTop_toBottomOf="@+id/textView16"
-                tools:listitem="@layout/movie_cast_item" >
+                tools:listitem="@layout/movie_cast_item" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+            <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+                android:id="@+id/not_found_casts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="@{((CastsDto)castViewModel.movieCastsState.data).cast.size == 0 ? View.VISIBLE : View.GONE}"
+                app:hideButton="true"
+                app:hideImage="true"
+                app:layout_constraintBottom_toBottomOf="@id/casts_shimmer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/casts_shimmer"
+                app:notFoundLayoutDesc="No cast found!"
+                app:notFoundLayoutTitle="No Casts" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -494,6 +538,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:elevation="1dp"
+                android:id="@+id/shimmer_similar"
                 isShimmerLoading="@{movieViewModel.similarMoviesState.loading}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -534,6 +579,22 @@
                 app:layout_constraintStart_toStartOf="@id/overview_shimmer"
                 app:layout_constraintTop_toBottomOf="@id/textView17"
                 tools:listitem="@layout/movie_item" />
+
+            <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+                android:id="@+id/not_found_similar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:visibility="@{((SimilarMoviesDto)movieViewModel.similarMoviesState.data).results.size == 0 ? View.VISIBLE : View.GONE}"
+                app:hideButton="true"
+                app:hideImage="true"
+                app:layout_constraintBottom_toBottomOf="@id/shimmer_similar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/shimmer_similar"
+                app:notFoundLayoutDesc="No similar movies found!"
+                app:notFoundLayoutTitle="No Similar Movies" />
 
             <ImageView
                 android:id="@+id/iv_movie_detail_back"
@@ -582,12 +643,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="See All"
-                android:visibility="@{((TrailersDto)movieViewModel.trailerState.data).results.size == 0 ? View.GONE : View.VISIBLE}"
                 android:textColor="@color/primary_color"
                 android:textFontWeight="600"
-                app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_trailers_title"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView31" />
+                app:layout_constraintTop_toTopOf="@+id/tv_trailers_title" />
 
             <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
                 android:layout_width="match_parent"

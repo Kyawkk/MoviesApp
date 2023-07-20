@@ -5,6 +5,7 @@
     
     <data>
         <import type="com.kyawzinlinn.moviesapp.utils.RecyclerviewType"/>
+        <import type="android.view.View"/>
         <variable
             name="isLoading"
             type="Boolean" />
@@ -112,6 +113,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/not_found_layout"
+            app:notFoundLayoutTitle="No Movies"
+            app:notFoundLayoutDesc="No movies found!"
+            app:hideButton="true"
+            android:visibility="@{(movies.size == 0 &amp;&amp; !isLoading) ? View.VISIBLE : View.GONE}"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
     
 </layout>
