@@ -15,6 +15,7 @@ class NotFoundLayout(context: Context?, private val attrs: AttributeSet?) : Line
 
     init {
         orientation = VERTICAL
+        visibility = View.GONE
         init()
     }
 
