@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.databinding.VerticalMovieItemBinding
 
-class VerticalMovieItemAdapter(private val movies: MutableList<Movie>, private val onItemClick: (String) -> Unit): RecyclerView.Adapter< VerticalMovieItemAdapter.ViewHolder>() {
+class VerticalMovieItemAdapter(private val movies: MutableList<Movie>, private val onItemClick: (String) -> Unit): RecyclerView.Adapter<VerticalMovieItemAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: VerticalMovieItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie){

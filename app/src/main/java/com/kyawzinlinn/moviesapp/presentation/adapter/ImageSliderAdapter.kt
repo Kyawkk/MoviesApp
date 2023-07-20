@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.util.Log
 import android.view.LayoutInflater

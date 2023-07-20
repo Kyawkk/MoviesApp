@@ -1,6 +1,7 @@
-package com.kyawzinlinn.moviesapp.domain.binding_adapter
+package com.kyawzinlinn.moviesapp.presentation.binding_adapter
 
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -19,16 +20,16 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.data.remote.dto.Profile
 import com.kyawzinlinn.moviesapp.data.remote.dto.TrailerMovie
-import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.TrailerItemAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.ImageSliderAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastItemAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.SearchHistoryAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.VerticalMovieItemAdapter
-import com.kyawzinlinn.moviesapp.domain.custom_view.SliderDotIndicator
-import com.kyawzinlinn.moviesapp.domain.item_animator.CustomItemAnimator
+import com.kyawzinlinn.moviesapp.presentation.adapter.GenreAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.HorizontalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.TrailerItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.ImageSliderAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.MovieCastAvatarItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.MovieCastItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.SearchHistoryAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.VerticalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.custom_view.SliderDotIndicator
+import com.kyawzinlinn.moviesapp.presentation.item_animator.CustomItemAnimator
 import com.kyawzinlinn.moviesapp.utils.CastType
 import com.kyawzinlinn.moviesapp.utils.IMG_URL_PREFIX_300
 import com.kyawzinlinn.moviesapp.utils.IMG_URL_PREFIX_500
@@ -82,7 +83,9 @@ fun bindCastAge(textView: TextView, castDetailsDto: CastDetailsDto?){
         
         if (deathDay == "null") textView.text = "$birthday (${calculateAge(birthday)})"
         else textView.text = "$birthday (Died at $deathDay)"
-    }catch (e: Exception){}
+    }catch (e: Exception){
+        textView.text = "-"
+    }
 }
 
 @BindingAdapter("splitDate")
@@ -198,4 +201,9 @@ fun bindTrailersRecyclerview(recyclerView: RecyclerView, trailers: List<TrailerM
     val adapter = recyclerView.adapter as TrailerItemAdapter
     recyclerView.adapter = adapter
     adapter.submitList(trailers)
+}
+
+@BindingAdapter("setText")
+fun TextView.bindTexToTextView(string: String?){
+    text = string.takeUnless { it.isNullOrEmpty() || it.equals("null", ignoreCase = true) } ?: "-"
 }

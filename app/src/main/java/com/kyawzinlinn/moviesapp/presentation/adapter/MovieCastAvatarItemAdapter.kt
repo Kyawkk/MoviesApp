@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
 import com.kyawzinlinn.moviesapp.databinding.MovieCastItemBinding
 
-class MovieCastAvatarItemAdapter(private val onCastClick: (String) -> Unit): ListAdapter<Cast, MovieCastAvatarItemAdapter.ViewHolder>(DiffCallBack) {
+class MovieCastAvatarItemAdapter(private val onCastClick: (String) -> Unit): ListAdapter<Cast, MovieCastAvatarItemAdapter.ViewHolder>(
+    DiffCallBack
+) {
     class ViewHolder(private val binding: MovieCastItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(cast: Cast){
             binding.cast = cast

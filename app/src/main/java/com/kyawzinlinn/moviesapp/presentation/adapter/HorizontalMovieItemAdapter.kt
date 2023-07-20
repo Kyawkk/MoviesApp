@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.animation.LayoutTransition
 import android.view.LayoutInflater
@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.databinding.MovieItemBinding
 
-class HorizontalMovieItemAdapter(private val onItemClick: (String, MovieItemBinding) -> Unit): ListAdapter<Movie,HorizontalMovieItemAdapter.ViewHolder>(DiffCallBack) {
+class HorizontalMovieItemAdapter(private val onItemClick: (String, MovieItemBinding) -> Unit): ListAdapter<Movie, HorizontalMovieItemAdapter.ViewHolder>(
+    DiffCallBack
+) {
     class ViewHolder(val binding: MovieItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie){
             binding.movie = movie

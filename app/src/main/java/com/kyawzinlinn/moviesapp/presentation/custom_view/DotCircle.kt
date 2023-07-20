@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.custom_view
+package com.kyawzinlinn.moviesapp.presentation.custom_view
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator

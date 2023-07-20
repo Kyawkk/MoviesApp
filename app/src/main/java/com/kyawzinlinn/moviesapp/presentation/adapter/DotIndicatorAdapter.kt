@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.R
 import com.kyawzinlinn.moviesapp.databinding.DotItemBinding
 
-class DotIndicatorAdapter: ListAdapter<String,DotIndicatorAdapter.ViewHolder>(DiffCallBack) {
+class DotIndicatorAdapter: ListAdapter<String, DotIndicatorAdapter.ViewHolder>(DiffCallBack) {
 
     private var selectedPosition = 0
     private lateinit var context: Context

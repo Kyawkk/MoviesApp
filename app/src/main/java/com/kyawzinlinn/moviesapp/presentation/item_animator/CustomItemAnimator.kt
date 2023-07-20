@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.item_animator
+package com.kyawzinlinn.moviesapp.presentation.item_animator
 
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView

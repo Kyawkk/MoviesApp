@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.databinding.GenreItemBinding
 
-class GenreAdapter(private val onGenreClick: (Genre) -> Unit): ListAdapter<Genre, GenreAdapter.ViewHolder>(DiffCallBack) {
+class GenreAdapter(private val onGenreClick: (Genre) -> Unit): ListAdapter<Genre, GenreAdapter.ViewHolder>(
+    DiffCallBack
+) {
     class ViewHolder(private val binding: GenreItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(genre: Genre){
             binding.genre = genre

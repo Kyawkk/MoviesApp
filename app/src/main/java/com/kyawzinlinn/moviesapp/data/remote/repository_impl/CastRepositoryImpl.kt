@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.data.remote.repository
+package com.kyawzinlinn.moviesapp.data.remote.repository_impl
 
 import com.kyawzinlinn.moviesapp.data.remote.CastApi
 import com.kyawzinlinn.moviesapp.data.remote.dto.CastDetailsDto

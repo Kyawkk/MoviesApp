@@ -18,13 +18,14 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.SimilarMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TagMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TopRatedMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.UpComingMoviesDto
-import com.kyawzinlinn.moviesapp.data.remote.repository.MovieRepositoryImpl
+import com.kyawzinlinn.moviesapp.data.remote.repository_impl.MovieRepositoryImpl
 import com.kyawzinlinn.moviesapp.databinding.ActivitySeeAllMoviesBinding
-import com.kyawzinlinn.moviesapp.domain.adapter.VerticalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.VerticalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.CAST_NAME_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
 import com.kyawzinlinn.moviesapp.utils.GENRE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
@@ -37,7 +38,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SeeAllMoviesActivity : AppCompatActivity() {
+class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionReceiverListener {
 
     private lateinit var binding: ActivitySeeAllMoviesBinding
     private lateinit var viewModel: MovieViewModel
@@ -65,6 +66,10 @@ class SeeAllMoviesActivity : AppCompatActivity() {
         loadInitialMovies()
         setUpClickListeners()
         setUpSeeAllMoviesRecyclerview()
+    }
+
+    override fun onConnectionChanged(isConnected: Boolean) {
+        if (isConnected) loadInitialMovies()
     }
 
     private fun loadInitialMovies() {

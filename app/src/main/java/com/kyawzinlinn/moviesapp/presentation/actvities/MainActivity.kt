@@ -2,17 +2,21 @@ package com.kyawzinlinn.moviesapp.presentation.actvities
 
 import android.animation.LayoutTransition
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import com.kyawzinlinn.moviesapp.databinding.ActivityMainBinding
-import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
+import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
@@ -21,10 +25,11 @@ import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ConnectionReceiver.ConnectionReceiverListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: MovieViewModel
-    private val TAG = "TAG"
+    private lateinit var connectionReceiver: ConnectionReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,16 +43,13 @@ class MainActivity : AppCompatActivity() {
 
         setUpLayoutTransition(binding.parent)
 
+        setUpConnectionReceiver()
+
         // set data to binding
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
 
-        viewModel.apply {
-            getNowPlayingMovies("1")
-            getPopularMovies("1")
-            getTopRatedMovies("1")
-            getUpComingMovies("1")
-        }
+        loadMovies()
 
         binding.apply {
             rvNowPlaying.adapter = getHorizontalMovieAdapter()
@@ -57,6 +59,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         setUpClickListeners()
+    }
+
+    private fun loadMovies() {
+        viewModel.apply {
+            getNowPlayingMovies("1")
+            getPopularMovies("1")
+            getTopRatedMovies("1")
+            getUpComingMovies("1")
+        }
+    }
+
+    private fun setUpConnectionReceiver() {
+        val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        connectionReceiver = ConnectionReceiver()
+        registerReceiver(connectionReceiver,intentFilter)
+
+        ConnectionReceiver.listener = this
+    }
+
+    override fun onConnectionChanged(isConnected: Boolean) {
+        if(isConnected) loadMovies()
     }
 
     private fun setUpClickListeners() {
@@ -82,7 +105,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun getHorizontalMovieAdapter(): HorizontalMovieItemAdapter{
+    private fun getHorizontalMovieAdapter(): HorizontalMovieItemAdapter {
         return HorizontalMovieItemAdapter{ id, itemBinding ->
             val intent = Intent(this, MovieDetailActivity::class.java)
             val pair1 = Pair.create(itemBinding.ivMoviePoster as View,itemBinding.ivMoviePoster.transitionName)

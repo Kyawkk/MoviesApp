@@ -12,8 +12,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kyawzinlinn.moviesapp.data.remote.dto.CastDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.CastProfilesDto
 import com.kyawzinlinn.moviesapp.databinding.ActivityCastDetailBinding
-import com.kyawzinlinn.moviesapp.domain.adapter.DotIndicatorAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.DotIndicatorAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.CAST_NAME_INTENT_EXTRA
@@ -81,6 +81,24 @@ class CastDetailActivity : AppCompatActivity() {
             getCastDetails(castId)
             getMoviesOfCast(castId)
             getCastProfiles(castId)
+
+            castDetailsState.observe(this@CastDetailActivity){
+                if (it.error.isNotEmpty()) showSnackBar(window.decorView,it.error){
+                    loadAllCastDetails()
+                }
+            }
+
+            moviesOfCastState.observe(this@CastDetailActivity){
+                if (it.error.isNotEmpty()) showSnackBar(window.decorView,it.error){
+                    loadAllCastDetails()
+                }
+            }
+
+            castProfilesState.observe(this@CastDetailActivity){
+                if (it.error.isNotEmpty()) showSnackBar(window.decorView,it.error){
+                    loadAllCastDetails()
+                }
+            }
         }
     }
 
@@ -88,7 +106,6 @@ class CastDetailActivity : AppCompatActivity() {
         binding.apply {
             ivCastDetailBack.setOnClickListener { onBackPressed() }
             tvMoviesByCastSeeAll.setOnClickListener { goToSeeAllCastMoviesActivity() }
-
         }
     }
 

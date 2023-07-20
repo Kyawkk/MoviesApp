@@ -7,17 +7,20 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto
 import com.kyawzinlinn.moviesapp.databinding.ActivityMovieDetailBinding
-import com.kyawzinlinn.moviesapp.domain.adapter.GenreAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.HorizontalMovieItemAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.TrailerItemAdapter
-import com.kyawzinlinn.moviesapp.domain.adapter.MovieCastAvatarItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.GenreAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.HorizontalMovieItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.TrailerItemAdapter
+import com.kyawzinlinn.moviesapp.presentation.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
+import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieState
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
 import com.kyawzinlinn.moviesapp.utils.GENRE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_NAME_INTENT_EXTRA
@@ -30,7 +33,7 @@ import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionReceiverListener {
 
     private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var movieViewModel: MovieViewModel
@@ -62,6 +65,13 @@ class MovieDetailActivity : AppCompatActivity() {
         bindUI()
     }
 
+    override fun onConnectionChanged(isConnected: Boolean) {
+        if(isConnected) {
+            loadMovieDetail()
+            loadMovieCasts()
+        }
+    }
+
     private fun setUpClickListeners(){
         binding.apply {
             ivMovieDetailBack.setOnClickListener { onBackPressed() }
@@ -83,6 +93,14 @@ class MovieDetailActivity : AppCompatActivity() {
 
             // go to see all trailers activity
             tvSeeAllTrailers.setOnClickListener { goToSeeAllTrailersActivity() }
+
+            // not found layout button action
+            notFoundLayout.setOnTryAgainListener {
+                loadMovieDetail()
+                loadMovieCasts()
+
+                notFoundLayout.visibility = View.GONE
+            }
         }
     }
 
@@ -119,6 +137,12 @@ class MovieDetailActivity : AppCompatActivity() {
 
         binding.rvTrailers.adapter = TrailerItemAdapter(RecyclerviewType.HORIZONTAL){
             playYouTubeVideo(it)
+        }
+
+        movieViewModel.movieDetailState.observe(this){
+            if (it.error.isNotEmpty() || it.error.isNotBlank()) {
+                binding.notFoundLayout.visibility = View.VISIBLE
+            }
         }
     }
 

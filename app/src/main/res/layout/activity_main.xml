@@ -44,13 +44,13 @@
 
             <TextView
                 android:id="@+id/textView"
-                style="@style/TextAppearance.Material3.HeadlineSmall"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Now Playing"
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -120,12 +120,12 @@
 
             <TextView
                 android:id="@+id/textView3"
-                style="@style/TextAppearance.Material3.HeadlineSmall"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Popular"
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/shimmer_now_playing"
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_now_playing" />
@@ -195,12 +195,12 @@
 
             <TextView
                 android:id="@+id/textView4"
-                style="@style/TextAppearance.Material3.HeadlineSmall"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Top Rated"
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/rv_now_playing"
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_popular" />
@@ -270,12 +270,12 @@
 
             <TextView
                 android:id="@+id/textView2"
-                style="@style/TextAppearance.Material3.HeadlineSmall"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Upcoming"
-                android:textSize="20sp"
+                android:textSize="18dp"
                 android:textFontWeight="600"
                 app:layout_constraintStart_toStartOf="@+id/shimmer_top_rated"
                 app:layout_constraintTop_toBottomOf="@+id/shimmer_top_rated" />

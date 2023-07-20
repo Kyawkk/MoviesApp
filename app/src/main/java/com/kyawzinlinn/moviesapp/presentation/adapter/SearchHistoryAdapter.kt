@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.local.database.MovieSearchHistory
 import com.kyawzinlinn.moviesapp.databinding.SearchHistoryItemBinding
 
-class SearchHistoryAdapter(private val onSearchHistoryClick: (MovieSearchHistory) -> Unit): ListAdapter<MovieSearchHistory, SearchHistoryAdapter.ViewHolder>(DiffCallBack) {
+class SearchHistoryAdapter(private val onSearchHistoryClick: (MovieSearchHistory) -> Unit): ListAdapter<MovieSearchHistory, SearchHistoryAdapter.ViewHolder>(
+    DiffCallBack
+) {
     class ViewHolder(val binding: SearchHistoryItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(searchHistory: MovieSearchHistory){
             binding.searchHistory = searchHistory

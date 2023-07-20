@@ -20,7 +20,7 @@ fun calculateAge(dateOfBirth: String): String{
 }
 
 fun showSnackBar(view: View,message: String, listener: View.OnClickListener){
-    val snackbar = Snackbar.make(view,message,Snackbar.LENGTH_SHORT)
+    val snackbar = Snackbar.make(view,message,Snackbar.LENGTH_LONG)
     snackbar.setAction("Ok", listener)
     snackbar.show()
 }

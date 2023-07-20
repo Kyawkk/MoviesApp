@@ -195,7 +195,7 @@
             app:layout_constraintEnd_toEndOf="@+id/ed_search_movies"
             app:layout_constraintTop_toTopOf="@+id/textView30" />
 
-        <com.kyawzinlinn.moviesapp.domain.custom_view.NotFoundLayout
+        <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -203,6 +203,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:notFoundLayoutTitle="No Result"
             android:id="@+id/not_found_layout"
+            app:hideButton="true"
             app:notFoundLayoutDesc="No movie is not found.\nTry a more general keyword"
             android:visibility="@{(totalResults.trim().charAt(0) == '0') ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="@+id/shimmerFrameLayout" />

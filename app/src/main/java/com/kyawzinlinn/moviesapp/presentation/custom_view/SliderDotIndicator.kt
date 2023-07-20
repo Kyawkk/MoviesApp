@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.custom_view
+package com.kyawzinlinn.moviesapp.presentation.custom_view
 
 import android.content.Context
 import android.graphics.Color

@@ -1,9 +1,7 @@
 package com.kyawzinlinn.moviesapp.data.di
 
 import com.kyawzinlinn.moviesapp.data.remote.CastApi
-import com.kyawzinlinn.moviesapp.data.remote.MovieApi
-import com.kyawzinlinn.moviesapp.data.remote.repository.CastRepositoryImpl
-import com.kyawzinlinn.moviesapp.data.remote.repository.MovieRepositoryImpl
+import com.kyawzinlinn.moviesapp.data.remote.repository_impl.CastRepositoryImpl
 import com.kyawzinlinn.moviesapp.domain.repository.CastRepository
 import com.kyawzinlinn.moviesapp.utils.BASE_URL
 import dagger.Module

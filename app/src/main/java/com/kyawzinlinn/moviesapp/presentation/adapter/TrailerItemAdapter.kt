@@ -1,4 +1,4 @@
-package com.kyawzinlinn.moviesapp.domain.adapter
+package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,9 @@ import com.kyawzinlinn.moviesapp.databinding.HorizontalTrailerItemBinding
 import com.kyawzinlinn.moviesapp.databinding.VerticalTrailerItemBinding
 import com.kyawzinlinn.moviesapp.utils.RecyclerviewType
 
-class TrailerItemAdapter(private val recyclerviewType: RecyclerviewType, private val onVideoClicked: (String) -> Unit): ListAdapter<TrailerMovie, RecyclerView.ViewHolder>(DiffCallBack) {
+class TrailerItemAdapter(private val recyclerviewType: RecyclerviewType, private val onVideoClicked: (String) -> Unit): ListAdapter<TrailerMovie, RecyclerView.ViewHolder>(
+    DiffCallBack
+) {
     class HorizontalViewHolder(private val binding: HorizontalTrailerItemBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(trailerMovie: TrailerMovie){

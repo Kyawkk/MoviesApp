@@ -292,7 +292,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:justificationMode="inter_word"
-                android:text="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).overview}"
+                setText="@{((MovieDetailsDto)movieViewModel.movieDetailState.data).overview}"
                 android:minHeight="100dp"
                 app:layout_constraintEnd_toEndOf="@+id/rv_genre"
                 app:layout_constraintStart_toStartOf="@+id/textView14"
@@ -321,7 +321,7 @@
                 android:textFontWeight="600"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
-                app:layout_constraintTop_toBottomOf="@+id/rv_trailers" />
+                app:layout_constraintTop_toBottomOf="@+id/shimmer_trailers" />
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_width="match_parent"
@@ -330,6 +330,7 @@
                 android:layout_marginTop="8dp"
                 isShimmerLoading="@{movieViewModel.trailerState.loading}"
                 android:layout_marginEnd="16dp"
+                android:id="@+id/shimmer_trailers"
                 android:translationZ="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -541,6 +542,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
+                android:translationZ="3dp"
                 android:clickable="true"
                 android:background="@drawable/button_bg"
                 app:layout_constraintStart_toStartOf="parent"
@@ -586,6 +588,22 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView31"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/textView31" />
+
+            <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:hideImage="true"
+                android:background="@color/white"
+                android:translationZ="2dp"
+                android:id="@+id/not_found_layout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone"
+                app:notFoundLayoutDesc="Something went wrong! Try again."
+                app:notFoundLayoutTitle="Error!" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

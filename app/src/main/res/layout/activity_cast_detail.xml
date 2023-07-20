@@ -40,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.kyawzinlinn.moviesapp.domain.custom_view.SliderDotIndicator
+            <com.kyawzinlinn.moviesapp.presentation.custom_view.SliderDotIndicator
                 android:id="@+id/dot_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                     android:layout_marginTop="16dp"
                     android:textFontWeight="600"
                     android:visibility="@{castViewModel.castDetailsState.loading ? View.INVISIBLE : View.VISIBLE}"
-                    android:text="@{((CastDetailsDto)castViewModel.castDetailsState.data).name}"
+                    setText="@{((CastDetailsDto)castViewModel.castDetailsState.data).name}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -139,7 +139,7 @@
 
                 <TextView
                     android:id="@+id/textView27"
-                    android:text="@{((CastDetailsDto)castViewModel.castDetailsState.data).place_of_birth}"
+                    setText="@{((CastDetailsDto)castViewModel.castDetailsState.data).place_of_birth}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@+id/textView21"
@@ -165,7 +165,7 @@
                     android:minHeight="50dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
-                    android:text="@{((CastDetailsDto)castViewModel.castDetailsState.data).biography}"
+                    setText="@{((CastDetailsDto)castViewModel.castDetailsState.data).biography}"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:justificationMode="inter_word"
                     app:layout_constraintStart_toStartOf="@+id/textView23"
@@ -193,6 +193,7 @@
                     android:text="See All"
                     android:clickable="true"
                     android:textFontWeight="550"
+                    android:visibility="@{castViewModel.castDetailsState.loading ? View.INVISIBLE : View.VISIBLE}"
                     android:textColor="@color/primary_color"
                     app:layout_constraintBottom_toBottomOf="@+id/textView25"
                     app:layout_constraintEnd_toEndOf="parent"
