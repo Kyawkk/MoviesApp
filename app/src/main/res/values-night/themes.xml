@@ -4,5 +4,11 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <item name="colorBackground">@color/colorBackgroundDark</item>
+        <item name="colorTextPrimary">@color/white</item>
+        <item name="colorItemBackground">@color/colorItemBackgroundDark</item>
+        <item name="colorChipBackground">@color/colorChipBackgroundDark</item>
     </style>
 </resources>

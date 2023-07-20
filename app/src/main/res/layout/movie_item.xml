@@ -17,7 +17,6 @@
         android:clickable="true"
         android:transitionName="itemTransition"
         app:strokeWidth="0dp"
-        app:cardBackgroundColor="@color/white"
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout

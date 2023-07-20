@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:scrollbarSize="0dp"
         android:id="@+id/root"
-        android:background="@color/activity_light_background"
+        android:background="?colorBackground"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

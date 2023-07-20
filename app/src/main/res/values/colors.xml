@@ -5,5 +5,11 @@
     <color name="primary_color">#03A9F4</color>
     <color name="place_holder">#dddddd</color>
     <color name="search_light_bg">#eeeeee</color>
-    <color name="activity_light_background">#eeeeee</color>
+    <color name="colorBackgroundLight">#eeeeee</color>
+
+    <!-- dark color schemes -->
+    <color name="colorBackgroundDark">#121212</color>
+    <color name="colorItemBackgroundDark">#3C3C3C</color>
+    <color name="colorChipBackgroundDark">#272727</color>
+
 </resources>

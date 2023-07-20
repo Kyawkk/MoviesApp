@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), ConnectionReceiver.ConnectionReceiverL
 
         setContentView(binding.root)
 
-        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        //AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
 
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 

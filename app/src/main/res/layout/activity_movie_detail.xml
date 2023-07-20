@@ -307,7 +307,7 @@
                 android:text="Trailers"
                 android:textFontWeight="600"
                 android:textSize="18sp"
-                android:visibility="@{movieViewModel.trailerState.data == null ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{((TrailersDto)movieViewModel.trailerState.data).results.size == 0 ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="@+id/materialCardView"
                 app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
 
@@ -582,7 +582,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="See All"
-                android:visibility="@{movieViewModel.trailerState.data == null ? View.INVISIBLE : View.VISIBLE}"
+                android:visibility="@{((TrailersDto)movieViewModel.trailerState.data).results.size == 0 ? View.GONE : View.VISIBLE}"
                 android:textColor="@color/primary_color"
                 android:textFontWeight="600"
                 app:layout_constraintBottom_toBottomOf="@+id/textView31"

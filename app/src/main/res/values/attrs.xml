@@ -10,9 +10,11 @@
         <attr name="hideImage" format="boolean"/>
         <attr name="hideButton" format="boolean"/>
     </declare-styleable>
-
-    <!--<declare-styleable name="NotFoundLayout">
-        <attr name="notFoundLayoutTitle" format="string"/>
-        <attr name="notFoundLayoutDesc" format="string"/>
-    </declare-styleable>-->
+    
+    <!-- Color schemes -->
+    <attr name="colorBackground" format="color"/>
+    <attr name="colorTextPrimary" format="color"/>
+    <attr name="colorItemBackground" format="color"/>
+    <attr name="colorChipBackground" format="color"/>
+    
 </resources>
