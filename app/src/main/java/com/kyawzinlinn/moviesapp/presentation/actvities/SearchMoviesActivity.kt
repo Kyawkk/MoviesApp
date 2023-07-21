@@ -22,6 +22,7 @@ import com.kyawzinlinn.moviesapp.presentation.adapter.VerticalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.SearchHistoryViewModel
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +51,7 @@ class SearchMoviesActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.root.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        binding.root.setUpLayoutTransition()
 
         binding.viewModel = viewModel
         binding.searchHistoryViewModel = searchHistoryViewModel
@@ -85,9 +86,7 @@ class SearchMoviesActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun afterTextChanged(p0: Editable?) {}
-
         })
     }
 

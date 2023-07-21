@@ -51,7 +51,6 @@
                 android:scaleType="centerCrop"
                 android:id="@+id/iv_movie_poster"
                 android:translationZ="0dp"
-                android:transitionName="@string/movie_img_shared_transition"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

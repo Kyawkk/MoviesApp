@@ -3,6 +3,8 @@ package com.kyawzinlinn.moviesapp.presentation.actvities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.lifecycle.ViewModelProvider
 import com.kyawzinlinn.moviesapp.databinding.ActivitySeeAllCastsBinding
 import com.kyawzinlinn.moviesapp.presentation.adapter.MovieCastItemAdapter
@@ -10,6 +12,7 @@ import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.TransitionName
 import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,9 +65,9 @@ class SeeAllCastsActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRec
     }
 
     private fun setUpRecyclerView() {
-        binding.rvSeeAllCasts.adapter = MovieCastItemAdapter{
+        binding.rvSeeAllCasts.adapter = MovieCastItemAdapter{ cast ->
             val intent = Intent(this, CastDetailActivity::class.java)
-            intent.putExtra(CAST_ID_INTENT_EXTRA,it.id.toString())
+            intent.putExtra(CAST_ID_INTENT_EXTRA,cast.id.toString())
             startActivity(intent)
         }
     }

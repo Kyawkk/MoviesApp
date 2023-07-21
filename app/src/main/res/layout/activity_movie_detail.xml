@@ -55,7 +55,6 @@
                     android:layout_width="130dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="16dp"
-                    android:transitionName="@string/movie_img_shared_transition"
                     android:layout_marginTop="-40dp"
                     android:outlineSpotShadowColor="@android:color/transparent"
                     android:shadowColor="@android:color/transparent"
@@ -76,7 +75,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/tv_movie_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -89,7 +88,6 @@
                     style="@style/TextAppearance.MaterialComponents.Subtitle1"
                     android:textSize="22sp"
                     android:textFontWeight="600"
-                    android:transitionName="@string/movie_title_shared_transition"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/materialCardView"
                     app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
@@ -103,9 +101,9 @@
                     android:layout_marginTop="2dp"
                     android:visibility="@{movieViewModel.movieDetailState.loading ? View.GONE : View.VISIBLE}"
                     android:textFontWeight="600"
-                    app:layout_constraintEnd_toEndOf="@+id/textView5"
-                    app:layout_constraintStart_toStartOf="@+id/textView5"
-                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                    app:layout_constraintEnd_toEndOf="@+id/tv_movie_title"
+                    app:layout_constraintStart_toStartOf="@+id/tv_movie_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_title" />
 
                 <TextView
                     android:id="@+id/textView12"

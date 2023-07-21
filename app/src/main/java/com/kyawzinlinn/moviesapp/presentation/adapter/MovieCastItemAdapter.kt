@@ -2,6 +2,7 @@ package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -12,7 +13,7 @@ import com.kyawzinlinn.moviesapp.databinding.CastVerticalItemBinding
 class MovieCastItemAdapter(private val onCastClicked: (Cast) -> Unit): ListAdapter<Cast, MovieCastItemAdapter.ViewHolder>(
     DiffCallBack
 ) {
-    class ViewHolder(private val binding: CastVerticalItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder( val binding: CastVerticalItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(cast: Cast){
             binding.cast = cast
             binding.executePendingBindings()
@@ -28,8 +29,7 @@ class MovieCastItemAdapter(private val onCastClicked: (Cast) -> Unit): ListAdapt
         val cast = getItem(position)
         holder.bind(cast)
 
-        holder.itemView.setOnClickListener { onCastClicked(cast)
-            Log.d("TAG", "setUpRecyclerView: $cast")}
+        holder.itemView.setOnClickListener { onCastClicked(cast)}
     }
 
     companion object DiffCallBack: DiffUtil.ItemCallback<Cast>(){

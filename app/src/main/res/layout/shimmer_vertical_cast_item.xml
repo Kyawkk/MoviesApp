@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
-        android:id="@+id/imageView3"
+        android:id="@+id/iv_cast_profile"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/tv_cast_name"
         style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:background="@color/place_holder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_cast_profile" />
 
     <TextView
         android:id="@+id/textView19"
@@ -35,7 +35,7 @@
         android:layout_marginTop="8dp"
         android:background="@color/place_holder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView18"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintEnd_toEndOf="@+id/tv_cast_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_cast_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cast_name" />
 </LinearLayout>

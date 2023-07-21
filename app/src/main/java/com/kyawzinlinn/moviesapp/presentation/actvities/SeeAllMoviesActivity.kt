@@ -67,13 +67,13 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
         binding.parent.setUpLayoutTransition()
 
         bindUI()
-        loadInitialMovies()
+        //loadInitialMovies()
         setUpClickListeners()
         setUpSeeAllMoviesRecyclerview()
     }
 
     override fun onConnectionChanged(isConnected: Boolean) {
-        if (isConnected) loadInitialMovies()
+        //if (isConnected) loadInitialMovies()
     }
 
     private fun loadInitialMovies() {
@@ -200,6 +200,7 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
     }
 
     private fun loadUpcomingMovies(movies: MutableList<Movie>) {
+        viewModel.getUpComingMovies("1")
         viewModel.upComingMovieState.observe(this) {
             binding.isLoading = it.isLoading
             if (it.data != null) {
@@ -211,6 +212,7 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
     }
 
     private fun loadTopRatedMovies(movies: MutableList<Movie>) {
+        viewModel.getTopRatedMovies("1")
         viewModel.topRatedMovieState.observe(this) {
             binding.isLoading = it.isLoading
             if (it.data != null) {
@@ -222,6 +224,7 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
     }
 
     private fun loadPopularMovies(movies: MutableList<Movie>){
+        viewModel.getPopularMovies("1")
         viewModel.popularMovieState.observe(this) {
             binding.isLoading = it.isLoading
             if (it.data != null) {
@@ -233,7 +236,7 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
     }
 
     private fun loadNowPlayingMovies(movies: MutableList<Movie>){
-
+        viewModel.getNowPlayingMovies("1")
         viewModel.nowPlayingMovieState.observe(this) {
             binding.isLoading = it.isLoading
             if (it.data != null) {

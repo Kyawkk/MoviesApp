@@ -20,6 +20,7 @@ import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
+import com.kyawzinlinn.moviesapp.utils.TransitionName
 import com.kyawzinlinn.moviesapp.utils.openGitHub
 import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,22 +43,23 @@ class MainActivity : AppCompatActivity(), ConnectionReceiver.ConnectionReceiverL
         // smooth layout transition
         binding.parent.setUpLayoutTransition()
 
-        setUpConnectionReceiver()
-
         // set data to binding
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
 
+        setUpConnectionReceiver()
         loadMovies()
+        setUpRecyclerviewAdapters()
+        setUpClickListeners()
+    }
 
+    private fun setUpRecyclerviewAdapters() {
         binding.apply {
             rvNowPlaying.adapter = getHorizontalMovieAdapter()
             rvPopular.adapter = getHorizontalMovieAdapter()
             rvTopRated.adapter = getHorizontalMovieAdapter()
             rvUpcoming.adapter = getHorizontalMovieAdapter()
         }
-
-        setUpClickListeners()
     }
 
     private fun loadMovies() {
@@ -73,7 +75,6 @@ class MainActivity : AppCompatActivity(), ConnectionReceiver.ConnectionReceiverL
         val intentFilter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         connectionReceiver = ConnectionReceiver()
         registerReceiver(connectionReceiver,intentFilter)
-
         ConnectionReceiver.listener = this
     }
 
@@ -107,6 +108,10 @@ class MainActivity : AppCompatActivity(), ConnectionReceiver.ConnectionReceiverL
     private fun getHorizontalMovieAdapter(): HorizontalMovieItemAdapter {
         return HorizontalMovieItemAdapter{ id, itemBinding ->
             val intent = Intent(this, MovieDetailActivity::class.java)
+
+            itemBinding.ivMoviePoster.transitionName = "${TransitionName.ITEM_IMAGE_TRANSITION_NAME}$id"
+            itemBinding.textView7.transitionName = "${TransitionName.ITEM_TEXT_TRANSITION_NAME}$id"
+
             val pair1 = Pair.create(itemBinding.ivMoviePoster as View,itemBinding.ivMoviePoster.transitionName)
             val pair2 = Pair.create(itemBinding.textView7 as View,itemBinding.textView7.transitionName)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,pair1,pair2)

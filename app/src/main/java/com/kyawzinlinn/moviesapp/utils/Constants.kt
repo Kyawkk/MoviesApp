@@ -17,6 +17,14 @@ const val CAST_NAME_INTENT_EXTRA = "cast_name_intent_extra"
 
 const val TAG = "Log TAG"
 
+object TransitionName{
+    const val ITEM_IMAGE_TRANSITION_NAME = "item_image_transition_name"
+    const val ITEM_TEXT_TRANSITION_NAME = "item_text_transition_name"
+
+    const val CAST_IMAGE_TRANSITION_NAME = "cast_item_transition_name"
+    const val CAST_TEXT_TRANSITION_NAME = "cast_text_transition_name"
+}
+
 enum class MovieType{
     NOW_PLAYING, POPULAR, TOP_RATED, UPCOMING, SIMILAR, TAG_MOVIES, SEARCH_RESULTS, MOVIES_BY_CAST
 }

@@ -1,6 +1,7 @@
 package com.kyawzinlinn.moviesapp.presentation.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyawzinlinn.moviesapp.data.remote.dto.Cast
 import com.kyawzinlinn.moviesapp.databinding.MovieCastItemBinding
 
-class MovieCastAvatarItemAdapter(private val onCastClick: (String) -> Unit): ListAdapter<Cast, MovieCastAvatarItemAdapter.ViewHolder>(
+class MovieCastAvatarItemAdapter(private val onCastClick: (String,View) -> Unit): ListAdapter<Cast, MovieCastAvatarItemAdapter.ViewHolder>(
     DiffCallBack
 ) {
     class ViewHolder(private val binding: MovieCastItemBinding): RecyclerView.ViewHolder(binding.root) {
@@ -25,7 +26,7 @@ class MovieCastAvatarItemAdapter(private val onCastClick: (String) -> Unit): Lis
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cast = getItem(position)
         holder.bind(cast)
-        holder.itemView.setOnClickListener { onCastClick(cast.id.toString()) }
+        holder.itemView.setOnClickListener { onCastClick(cast.id.toString(),holder.itemView) }
     }
 
     companion object DiffCallBack: DiffUtil.ItemCallback<Cast>(){

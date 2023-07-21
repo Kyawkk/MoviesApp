@@ -2,22 +2,18 @@ package com.kyawzinlinn.moviesapp.presentation.actvities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
-import com.kyawzinlinn.moviesapp.data.remote.dto.TrailersDto
 import com.kyawzinlinn.moviesapp.databinding.ActivityMovieDetailBinding
 import com.kyawzinlinn.moviesapp.presentation.adapter.GenreAdapter
 import com.kyawzinlinn.moviesapp.presentation.adapter.HorizontalMovieItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.adapter.TrailerItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.adapter.MovieCastAvatarItemAdapter
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
-import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieState
 import com.kyawzinlinn.moviesapp.presentation.viewmodel.MovieViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
@@ -27,6 +23,7 @@ import com.kyawzinlinn.moviesapp.utils.MOVIE_NAME_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.RecyclerviewType
+import com.kyawzinlinn.moviesapp.utils.TransitionName
 import com.kyawzinlinn.moviesapp.utils.playYouTubeVideo
 import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
@@ -50,6 +47,13 @@ class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionRe
         castViewModel = ViewModelProvider(this).get(CastViewModel::class.java)
 
         setContentView(binding.root)
+
+        movieId = intent?.extras?.getString(MOVIE_ID_INTENT_EXTRA).toString()
+
+        binding.apply {
+            materialCardView.transitionName = "${TransitionName.ITEM_IMAGE_TRANSITION_NAME}$movieId"
+            tvMovieTitle.transitionName = "${TransitionName.ITEM_TEXT_TRANSITION_NAME}$movieId"
+        }
 
         setUpLayoutTransition(binding.parent)
 
@@ -113,34 +117,12 @@ class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionRe
 
     private fun bindUI() {
 
-        hideAllNotFoundLayouts()
+        //hideAllNotFoundLayouts()
 
-        binding.rvGenre.adapter = GenreAdapter {
-            // show all movies that appropriate with genre
-            val intent = Intent(this, SeeAllMoviesActivity::class.java)
-            intent.putExtra(MOVIE_TYPE_INTENT_EXTRA,MovieType.TAG_MOVIES)
-            intent.putExtra(GENRE_INTENT_EXTRA,it)
-            startActivity(intent)
-        }
-
-        binding.rvCast.adapter = MovieCastAvatarItemAdapter{
-            val intent = Intent(this, CastDetailActivity::class.java)
-            intent.putExtra(CAST_ID_INTENT_EXTRA,it)
-            startActivity(intent)
-        }
-
-        binding.rvSimilarMovies.adapter = HorizontalMovieItemAdapter{ movieId, itemBinding ->
-            val intent = Intent(this, MovieDetailActivity::class.java)
-            val pair1 = Pair.create(itemBinding.ivMoviePoster as View,itemBinding.ivMoviePoster.transitionName)
-            val pair2 = Pair.create(itemBinding.textView7 as View,itemBinding.textView7.transitionName)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this,pair1,pair2)
-            intent.putExtra(MOVIE_ID_INTENT_EXTRA,movieId)
-            startActivity(intent,options.toBundle())
-        }
-
-        binding.rvTrailers.adapter = TrailerItemAdapter(RecyclerviewType.HORIZONTAL){
-            playYouTubeVideo(it)
-        }
+        setUpGenreAdapter()
+        setUpCastRecyclerviewAdapter()
+        setUpSimilarMoviewRecyclerviewAdapter()
+        setUpTrailerRecyclerviewAdapter()
 
         movieViewModel.movieDetailState.observe(this){
             if (it.error.isNotEmpty() || it.error.isNotBlank()) {
@@ -149,17 +131,59 @@ class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionRe
         }
     }
 
-    private fun hideAllNotFoundLayouts() {
-        binding.apply {
-            notFoundCasts.visibility = View.GONE
-            notFoundTrailers.visibility = View.GONE
-            notFoundSimilar.visibility = View.GONE
+    private fun setUpTrailerRecyclerviewAdapter() {
+        binding.rvTrailers.adapter = TrailerItemAdapter(RecyclerviewType.HORIZONTAL) {
+            playYouTubeVideo(it)
+        }
+    }
+
+    private fun setUpSimilarMoviewRecyclerviewAdapter() {
+        binding.rvSimilarMovies.adapter = HorizontalMovieItemAdapter { movieId, itemBinding ->
+            val intent = Intent(this, MovieDetailActivity::class.java)
+
+            itemBinding.ivMoviePoster.transitionName =
+                "${TransitionName.ITEM_IMAGE_TRANSITION_NAME}$movieId"
+            itemBinding.textView7.transitionName =
+                "${TransitionName.ITEM_TEXT_TRANSITION_NAME}$movieId"
+
+            val pair1 = Pair.create(
+                itemBinding.ivMoviePoster as View,
+                itemBinding.ivMoviePoster.transitionName
+            )
+            val pair2 =
+                Pair.create(itemBinding.textView7 as View, itemBinding.textView7.transitionName)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, pair1, pair2)
+            intent.putExtra(MOVIE_ID_INTENT_EXTRA, movieId)
+            startActivity(intent, options.toBundle())
+        }
+    }
+
+    private fun setUpCastRecyclerviewAdapter() {
+        binding.rvCast.adapter = MovieCastAvatarItemAdapter { castId, view ->
+            val intent = Intent(this, CastDetailActivity::class.java)
+
+            view.transitionName = "${TransitionName.CAST_IMAGE_TRANSITION_NAME}$castId"
+
+            val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this,
+                Pair(view, view.transitionName)
+            )
+            intent.putExtra(CAST_ID_INTENT_EXTRA, castId)
+            startActivity(intent, optionsCompat.toBundle())
+        }
+    }
+
+    private fun setUpGenreAdapter() {
+        binding.rvGenre.adapter = GenreAdapter {
+            // show all movies that appropriate with genre
+            val intent = Intent(this, SeeAllMoviesActivity::class.java)
+            intent.putExtra(MOVIE_TYPE_INTENT_EXTRA, MovieType.TAG_MOVIES)
+            intent.putExtra(GENRE_INTENT_EXTRA, it)
+            startActivity(intent)
         }
     }
 
     private fun loadMovieDetail() {
-        movieId = intent?.extras?.getString(MOVIE_ID_INTENT_EXTRA).toString()
-
         movieViewModel.apply {
             getMovieDetails(movieId)
             getSimilarMovies(movieId,"1")
@@ -167,11 +191,10 @@ class MovieDetailActivity : AppCompatActivity(), ConnectionReceiver.ConnectionRe
         }
 
         movieViewModel.movieDetailState.observe(this){
-
             if (it.data != null) movieName = (it.data as MovieDetailsDto).title
-
             if (it.error.isNotEmpty()) showSnackBar(window.decorView,it.error,{
-
+                loadMovieDetail()
+                loadMovieCasts()
             })
         }
     }
