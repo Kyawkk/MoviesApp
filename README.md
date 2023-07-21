@@ -1,5 +1,5 @@
 # MoviesApp
- An app that shows the list of the movies and their details.
+ An app that shows the list of movies and their details.
 
 ## Architecture
 - Clean Architecture
