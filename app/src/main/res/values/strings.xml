@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoviesApp</string>
+    <string name="app_name">The Movies</string>
 
     <string name="movie_img_shared_transition">movie_img_shared_transition</string>
     <string name="movie_title_shared_transition">movie_title_shared_transition</string>
