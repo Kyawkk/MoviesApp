@@ -16,6 +16,7 @@
 - Search any movies
 - View movie details and casts details
 - View movie trailers
+- Support both light and dark mode
 - Works offline by caching data into room database.
 
 ## Screenshots
