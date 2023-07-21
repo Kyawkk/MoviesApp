@@ -12,9 +12,10 @@
 - Custom View Components using Canvas
 
 ## Screenshots
-| Cat pics                                                                              | Dog pics                                                                              | Lizzard                                                                                 |
-|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/one.png?raw=true) | ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/two.png?raw=true) | ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/three.png?raw=true) |
+| Home Screen                                                                             | Movie Details                                                                           | Search Any Movie                                                                            |
+|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| ![one](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/one.png?raw=true)   | ![two](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/two.png?raw=true)   | ![three](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/three.png?raw=true)   |
+| Home Screen                                                                             | Movie Details                                                                           | Search Any Movie                                                                            |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| ![one](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/four.png?raw=true)  | ![two](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/five.png?raw=true)  | ![three](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/six.png?raw=true)     |
 
-![Image 1](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/Screenshot_20230721_223050.png?raw=true){: style="width:300px"}
-![Image 1](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/Screenshot_20230721_223050.png?raw=true){: style="width:300px"}
