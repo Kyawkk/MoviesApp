@@ -1,6 +1,6 @@
 package com.kyawzinlinn.moviesapp.data.di
 
-import com.kyawzinlinn.moviesapp.data.remote.MovieApi
+import com.kyawzinlinn.moviesapp.data.api.MovieApi
 import com.kyawzinlinn.moviesapp.data.remote.repository_impl.MovieRepositoryImpl
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.BASE_URL
@@ -21,7 +21,7 @@ object MovieApiModule {
 
     @Provides
     @Singleton
-    fun provideMovieApi(): MovieApi{
+    fun provideMovieApi(): MovieApi {
         val mHttpLoggingInterceptor = HttpLoggingInterceptor()
             .setLevel(HttpLoggingInterceptor.Level.BODY)
 

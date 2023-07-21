@@ -80,7 +80,6 @@ dependencies {
     implementation ("androidx.room:room-ktx:$room_version")
 
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
 }
 kapt {

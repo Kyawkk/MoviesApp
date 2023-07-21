@@ -8,7 +8,7 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kyawzinlinn.moviesapp.data.remote.MovieApi
+import com.kyawzinlinn.moviesapp.data.api.MovieApi
 import com.kyawzinlinn.moviesapp.data.remote.dto.Genre
 import com.kyawzinlinn.moviesapp.data.remote.dto.Movie
 import com.kyawzinlinn.moviesapp.data.remote.dto.MoviesOfCastDto
@@ -73,19 +73,7 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
     }
 
     override fun onConnectionChanged(isConnected: Boolean) {
-        //if (isConnected) loadInitialMovies()
-    }
-
-    private fun loadInitialMovies() {
-        viewModel.apply {
-            getNowPlayingMovies("1")
-            getPopularMovies("1")
-            getTopRatedMovies("1")
-            getUpComingMovies("1")
-            try {
-                getSimilarMovies(movieId,"1")
-            }catch (e: Exception){}
-        }
+        if (isConnected) bindUI()
     }
 
     private fun setUpClickListeners() {

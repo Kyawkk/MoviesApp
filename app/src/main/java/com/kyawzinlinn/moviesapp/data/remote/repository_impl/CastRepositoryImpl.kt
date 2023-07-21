@@ -1,6 +1,6 @@
 package com.kyawzinlinn.moviesapp.data.remote.repository_impl
 
-import com.kyawzinlinn.moviesapp.data.remote.CastApi
+import com.kyawzinlinn.moviesapp.data.api.CastApi
 import com.kyawzinlinn.moviesapp.data.remote.dto.CastDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.CastsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.MoviesOfCastDto

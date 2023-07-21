@@ -1,6 +1,6 @@
 package com.kyawzinlinn.moviesapp.data.remote.repository_impl
 
-import com.kyawzinlinn.moviesapp.data.remote.MovieApi
+import com.kyawzinlinn.moviesapp.data.api.MovieApi
 import com.kyawzinlinn.moviesapp.data.remote.dto.MovieDetailsDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.TagMoviesDto
 import com.kyawzinlinn.moviesapp.data.remote.dto.NowPlayingMoviesDto
