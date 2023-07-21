@@ -12,9 +12,9 @@
 - Custom View Components using Canvas
 
 ## Screenshots
-| Cat pics                                                                              | Dog pics                            | Lizzard                                     |
-|---------------------------------------------------------------------------------------| ----------------------------------- | ------------------------------------------- |
-| ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/one.png?raw=true) | ![dog](https://example.com/dog.png) | ![lizzard](https://example.com/lizzard.png) |
+| Cat pics                                                                              | Dog pics                                                                              | Lizzard                                                                                 |
+|---------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/one.png?raw=true) | ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/two.png?raw=true) | ![cat](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/three.png?raw=true) |
 
 ![Image 1](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/Screenshot_20230721_223050.png?raw=true){: style="width:300px"}
 ![Image 1](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/Screenshot_20230721_223050.png?raw=true){: style="width:300px"}
