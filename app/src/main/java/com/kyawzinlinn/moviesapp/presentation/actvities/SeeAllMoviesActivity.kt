@@ -67,7 +67,6 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
         binding.parent.setUpLayoutTransition()
 
         bindUI()
-        //loadInitialMovies()
         setUpClickListeners()
         setUpSeeAllMoviesRecyclerview()
     }
@@ -177,6 +176,7 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
     }
 
     private fun loadSimilarMovies(movies: MutableList<Movie>) {
+        viewModel.getSimilarMovies(movieId,"1")
         viewModel.similarMoviesState.observe(this) {
             binding.isLoading = it.isLoading
             if (it.data != null) {
