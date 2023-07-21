@@ -7,8 +7,12 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.toDatabaseMovie
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class PopularMovieUseCase @Inject constructor(
@@ -20,18 +24,21 @@ class PopularMovieUseCase @Inject constructor(
 
         val type = MovieType.POPULAR
 
-        val moviesFromDb = movieDao.getMovies(type.toString()).toMovieDto(type) as PopularMoviesDto
-        emit(Resource.Loading(data = moviesFromDb))
         try {
 
-            val moviesFromApi = repository.getPopularMovies(page)
-
-            movieDao.deleteMovies(type.toString())
-            movieDao.insertAll(moviesFromApi.results.toDatabaseMovie(type.toString()))
-
-            emit(Resource.Success(moviesFromApi))
+            val moviesFromApi = withContext(Dispatchers.IO){
+                repository.getPopularMovies(page)
+            }
+            withContext(Dispatchers.IO){
+                movieDao.deleteMovies(type.toString())
+                movieDao.insertAll(moviesFromApi.results.toDatabaseMovie(type.toString()).take(10))
+            }
         }catch (e: Exception){
-            emit(Resource.Error(e.message.toString()))
+            when(e){
+                is IOException -> emit(Resource.Error("Network Unavailable: Please check your internet connection and try again."))
+                is HttpException -> emit(Resource.Error("An error occurred. Please check your internet connection."))
+                else -> emit(Resource.Error(e.message.toString()))
+            }
         }
 
         val newMovies = movieDao.getMovies(type.toString()).toMovieDto(type) as PopularMoviesDto

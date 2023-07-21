@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         tools:context=".presentation.actvities.SeeAllCastsActivity"
         android:background="?colorBackground"
+        android:animateLayoutChanges="true"
+        android:id="@+id/parent"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/iv_see_all_back"
@@ -193,7 +195,7 @@
             android:id="@+id/not_found_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{((CastsDto)castViewModel.movieCastsState.data).cast.size == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{!castViewModel.movieCastsState.loading &amp;&amp; ((CastsDto)castViewModel.movieCastsState.data).cast.size == 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

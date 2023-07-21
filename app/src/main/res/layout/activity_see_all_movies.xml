@@ -18,6 +18,8 @@
         android:layout_width="match_parent"
         tools:context=".presentation.actvities.SeeAllMoviesActivity"
         android:background="?colorBackground"
+        android:animateLayoutChanges="true"
+        android:id="@+id/parent"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/iv_see_all_back"

@@ -10,6 +10,7 @@ import com.kyawzinlinn.moviesapp.presentation.viewmodel.CastViewModel
 import com.kyawzinlinn.moviesapp.utils.CAST_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.ConnectionReceiver
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
+import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +29,9 @@ class SeeAllCastsActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRec
 
         movieId = intent?.extras?.getString(MOVIE_ID_INTENT_EXTRA).toString()
         castViewModel = ViewModelProvider(this).get(CastViewModel::class.java)
+
+        // smooth layout transition
+        binding.parent.setUpLayoutTransition()
 
         loadCasts()
 

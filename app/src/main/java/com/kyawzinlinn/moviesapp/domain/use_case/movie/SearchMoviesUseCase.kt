@@ -8,8 +8,12 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.toDatabaseMovie
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class SearchMoviesUseCase @Inject constructor(
@@ -19,24 +23,30 @@ class SearchMoviesUseCase @Inject constructor(
     operator fun invoke(query: String, page: String): Flow<Resource<SearchMoviesDto>> = flow {
         emit(Resource.Loading())
         val type = MovieType.SEARCH_RESULTS
-        try {
-            val searchMovies = repository.getSearchMovies(query, page)
 
-            if (searchMovies != null) {
+        try {
+            val searchMovies = withContext(Dispatchers.IO){
+                repository.getSearchMovies(query, page)
+            }
+
+            withContext(Dispatchers.IO){
                 val searchDatabaseMovies = searchMovies.results.toDatabaseMovie(type.toString())
 
                 movieDao.deleteMovies(type.toString())
-                movieDao.insertAll(searchDatabaseMovies)
-                emit(Resource.Success(searchMovies))
+
+                // store only up to 10 searches not to grow app size
+                movieDao.insertAll(if (searchDatabaseMovies.size > 10) searchDatabaseMovies.take(10) else searchDatabaseMovies)
             }
 
         } catch (e: Exception) {
-            val cachedSearchResults =
-                movieDao.searchMovies(query).toMovieDto(type) as SearchMoviesDto
-
-            emit(Resource.Success(cachedSearchResults))
-
-            emit(Resource.Error(e.message.toString()))
+            when(e){
+                is IOException -> emit(Resource.Error("Network Unavailable: Please check your internet connection and try again."))
+                is HttpException -> emit(Resource.Error("An error occurred. Please check your internet connection."))
+                else -> emit(Resource.Error(e.message.toString()))
+            }
         }
+
+        val cachedSearchResults = movieDao.searchMovies(query).toMovieDto(type) as SearchMoviesDto
+        emit(Resource.Success(cachedSearchResults))
     }
 }

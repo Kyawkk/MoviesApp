@@ -30,6 +30,7 @@ import com.kyawzinlinn.moviesapp.utils.GENRE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_TYPE_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MovieType
+import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -61,6 +62,9 @@ class SeeAllMoviesActivity : AppCompatActivity(),ConnectionReceiver.ConnectionRe
 
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         castViewModel = ViewModelProvider(this).get(CastViewModel::class.java)
+
+        // smooth layout transition
+        binding.parent.setUpLayoutTransition()
 
         bindUI()
         loadInitialMovies()

@@ -19,6 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?colorBackground"
+        android:animateLayoutChanges="true"
+        android:id="@+id/parent"
         tools:context=".presentation.actvities.SeeAllTrailersActivity">
         <ImageView
             android:id="@+id/iv_trailers_back"
@@ -41,6 +43,8 @@
             android:layout_marginTop="40dp"
             android:text="@{title}"
             android:textSize="18sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textFontWeight="600"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -208,6 +212,7 @@
             app:spanCount="2"
             tools:listitem="@layout/vertical_trailer_item" />
 
+        <!-- show layout if only when loading is finished and data size is greater than zero -->
         <com.kyawzinlinn.moviesapp.presentation.custom_view.NotFoundLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -215,7 +220,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:hideButton="true"
-            android:visibility="@{((TrailersDto)viewmodel.trailerState.data).results.size == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{!viewmodel.trailerState.loading &amp;&amp;((TrailersDto)viewmodel.trailerState.data).results.size == 0 ? View.VISIBLE : View.GONE}"
             app:notFoundLayoutTitle="No Trailers"
             app:notFoundLayoutDesc="No trailers found!"
             app:layout_constraintTop_toTopOf="parent" />

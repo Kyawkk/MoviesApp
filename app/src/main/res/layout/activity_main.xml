@@ -28,7 +28,6 @@
             android:id="@+id/parent"
             tools:context=".presentation.actvities.MainActivity">
 
-
             <TextView
                 android:id="@+id/textView28"
                 style="@style/TextAppearance.MaterialComponents.Headline5"

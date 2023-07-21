@@ -141,6 +141,7 @@
             android:layout_marginTop="16dp"
             android:text="@{@string/search_results(totalResults == null ? @string/empty_string : totalResults)}"
             android:textFontWeight="600"
+            android:visibility="@{!viewModel.searchMoviesState.loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="@+id/ed_search_movies"
             app:layout_constraintTop_toBottomOf="@+id/rv_search_history" />
 

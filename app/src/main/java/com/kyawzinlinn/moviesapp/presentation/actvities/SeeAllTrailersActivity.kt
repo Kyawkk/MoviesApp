@@ -11,6 +11,7 @@ import com.kyawzinlinn.moviesapp.utils.MOVIE_ID_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.MOVIE_NAME_INTENT_EXTRA
 import com.kyawzinlinn.moviesapp.utils.RecyclerviewType
 import com.kyawzinlinn.moviesapp.utils.playYouTubeVideo
+import com.kyawzinlinn.moviesapp.utils.setUpLayoutTransition
 import com.kyawzinlinn.moviesapp.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,9 @@ class SeeAllTrailersActivity : AppCompatActivity(), ConnectionReceiver.Connectio
         viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 
         setContentView(binding.root)
+
+        // smooth layout transition
+        binding.parent.setUpLayoutTransition()
 
         setUpClickListeners()
         setUpTrailersRecyclerView()

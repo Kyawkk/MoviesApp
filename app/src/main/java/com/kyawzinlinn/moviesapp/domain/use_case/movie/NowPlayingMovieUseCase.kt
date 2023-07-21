@@ -8,8 +8,15 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.toDatabaseMovie
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.Resource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
+import java.net.HttpURLConnection
 import javax.inject.Inject
 
 class NowPlayingMovieUseCase @Inject constructor(
@@ -21,25 +28,28 @@ class NowPlayingMovieUseCase @Inject constructor(
 
         val type = MovieType.NOW_PLAYING
 
-        val moviesFromDb = movieDao.getMovies(type.toString()).toMovieDto(type) as NowPlayingMoviesDto
-        //emit(Resource.Loading(data = moviesFromDb))
-
         try {
 
-            val moviesFromApi = repository.getNowPlayingMovies(page)
+            val moviesFromApi = withContext(Dispatchers.IO) {
+                repository.getNowPlayingMovies(page)
+            }
 
-            movieDao.deleteMovies(type.toString())
-            val databaseMovies = moviesFromApi.results.toDatabaseMovie(type.toString())
-            movieDao.insertAll(databaseMovies)
+            // Switch to the IO dispatcher for database operations
+            withContext(Dispatchers.IO) {
+                movieDao.deleteMovies(type.toString())
+                val databaseMovies = moviesFromApi.results.toDatabaseMovie(type.toString())
+                movieDao.insertAll(databaseMovies.take(10))
+            }
 
-            //emit(Resource.Success(moviesFromApi))
         }catch (e: Exception){
-            emit(Resource.Error(e.message.toString()))
+            when(e){
+                is IOException -> emit(Resource.Error("Network Unavailable: Please check your internet connection and try again."))
+                is HttpException -> emit(Resource.Error("An error occurred. Please check your internet connection."))
+                else -> emit(Resource.Error(e.message.toString()))
+            }
         }
 
         val newMovies = movieDao.getMovies(type.toString()).toMovieDto(type) as NowPlayingMoviesDto
-
-        Log.d("TAG", "after deleting: new ${movieDao.getMovies(type.toString())}")
         emit(Resource.Success(newMovies))
     }
 }

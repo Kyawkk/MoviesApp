@@ -7,8 +7,12 @@ import com.kyawzinlinn.moviesapp.data.remote.dto.toDatabaseMovie
 import com.kyawzinlinn.moviesapp.domain.repository.MovieRepository
 import com.kyawzinlinn.moviesapp.utils.MovieType
 import com.kyawzinlinn.moviesapp.utils.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class UpComingMovieUseCase @Inject constructor(
@@ -20,26 +24,21 @@ class UpComingMovieUseCase @Inject constructor(
 
         val type = MovieType.UPCOMING
 
-        val moviesFromDb = movieDao.getMovies(type.toString()).toMovieDto(type) as UpComingMoviesDto
-        emit(Resource.Loading(data = moviesFromDb))
         try {
-
-            val moviesFromApi = repository.getUpComingMovies(page)
-
-            movieDao.deleteMovies(type.toString())
-            movieDao.insertAll(moviesFromApi.results.toDatabaseMovie(type.toString()))
-
-            android.os.Handler().postDelayed(Runnable {
-
-            },0)
-
-            emit(Resource.Success(moviesFromApi))
+            val moviesFromApi = withContext(Dispatchers.IO){repository.getUpComingMovies(page)}
+            withContext(Dispatchers.IO){
+                movieDao.deleteMovies(type.toString())
+                movieDao.insertAll(moviesFromApi.results.toDatabaseMovie(type.toString()).take(10))
+            }
         }catch (e: Exception){
-            emit(Resource.Error(e.message.toString()))
+            when(e){
+                is IOException -> emit(Resource.Error("Network Unavailable: Please check your internet connection and try again."))
+                is HttpException -> emit(Resource.Error("An error occurred. Please check your internet connection."))
+                else -> emit(Resource.Error(e.message.toString()))
+            }
         }
 
         val newMovies = movieDao.getMovies(type.toString()).toMovieDto(type) as UpComingMoviesDto
-
         emit(Resource.Success(newMovies))
     }
 }

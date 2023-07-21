@@ -3,7 +3,9 @@ package com.kyawzinlinn.moviesapp.utils
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.view.ViewGroup
 import android.widget.Toast
+import androidx.transition.TransitionManager
 
 fun Activity.playYouTubeVideo(videoId: String){
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=$videoId"))
@@ -18,4 +20,8 @@ fun Activity.playYouTubeVideo(videoId: String){
 
 fun Activity.showToast(message: String){
     Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+}
+
+fun ViewGroup.setUpLayoutTransition(){
+    TransitionManager.beginDelayedTransition(this)
 }

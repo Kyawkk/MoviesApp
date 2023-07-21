@@ -15,13 +15,10 @@ class TrailersUseCase @Inject constructor(
     val movieDao: MovieDao
 ) {
     operator fun invoke(movieId: String): Flow<Resource<TrailersDto>> = flow {
+        emit(Resource.Loading())
+
         try {
-            emit(Resource.Loading())
-
             val trailersMovies = repository.getMovieTrailers(movieId)
-
-            Log.d("TAG", "trailersSize: ${trailersMovies.results.size}")
-
             emit(Resource.Success(trailersMovies))
         }catch (e: Exception){
             emit(Resource.Error(e.message.toString()))
