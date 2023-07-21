@@ -16,6 +16,6 @@
 |-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 | ![one](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/one.png?raw=true)   | ![two](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/two.png?raw=true)   | ![three](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/three.png?raw=true)   |
 | Home Screen                                                                             | Movie Details                                                                           | Search Any Movie                                                                            |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+
 | ![one](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/four.png?raw=true)  | ![two](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/five.png?raw=true)  | ![three](https://github.com/Kyawkk/MoviesApp/blob/master/screenshoots/six.png?raw=true)     |
 
