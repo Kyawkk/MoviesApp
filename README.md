@@ -1,4 +1,7 @@
 # MoviesApp
+ An app that shows movies details.
+
+## Features
 Movie App
 - Clean Architecture
 - Dagger Hilt
