@@ -33,4 +33,5 @@ You can easily clone the repository into your machine.
 `git clone https://github.com/Kyawkk/MoviesApp.git`
 
 And open the repository folder using Android Studio.
+
 If you encounter any problem, feel free to contact.
